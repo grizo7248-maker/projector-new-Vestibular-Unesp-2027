@@ -798,7 +798,7 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
 /* Vaga em 2 etapas: escolhe o concurso e o 2º select mostra só as vagas dele. */
 (function(){
   var CARGOS={
-    '1':[['301','301 - Auxiliar de Regulação Médica - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['302','302 - Condutor de Veículo de Urgência/Emergência Terrestre - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['303','303 - Condutor de Veículo de Urgência Marítimo - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['304','304 - Rádio Operador de Central de Regulação em Saúde - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['305','305 - Técnico de Regulação em Saúde - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['306','306 - Técnico em Enfermagem - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['307','307 - Técnico em Farmácia - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['308','308 - Auxiliar em Apoio Diagnóstico - Técnico em Laboratório - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['309','309 - Auxiliar em Apoio Diagnóstico - Técnico em Patologia Clínica - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['310','310 - Auxiliar em Apoio Diagnóstico - Técnico em Radiologia - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['311','311 - Técnico em Massoterapia - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['312','312 - Técnico em Nutrição e Dietética - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['313','313 - Técnico em Órtese e Prótese Ortopédica - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['314','314 - Técnico em Prótese Dentária - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['315','315 - Técnico em Saúde Bucal - Conforme Anexo III do Edital de Abertura - R$ 90,00','90.00'],['401','401 - Analista em Análises Clínicas - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['402','402 - Analista em Imaginologia - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['403','403 - Analista em Apoio Diagnóstico - Analista Químico e Ambiental - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['404','404 - Analista em Apoio Diagnóstico - Biólogo - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['405','405 - Analista em Apoio Diagnóstico - Biomédico - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['406','406 - Analista em Apoio Diagnóstico - Farmacêutico-Bioquímico - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['407','407 - Analista em Apoio Diagnóstico - Tecnólogo em Radiologia - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['408','408 - Assistente Social - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['409','409 - Cirurgião-Dentista - Endodontia - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['410','410 - Cirurgião-Dentista - Periodontia - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['411','411 - Cirurgião-Dentista - Odontopediatria - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['412','412 - Cirurgião-Dentista - Ortodontia - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['413','413 - Cirurgião-Dentista - Radiologia Odontológica e Imaginologia - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['414','414 - Cirurgião-Dentista - Ortopedia Funcional dos Maxilares - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['415','415 - Cirurgião-Dentista - Cirurgia e Traumatologia Buco-Maxilo-Facial - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['416','416 - Cirurgião-Dentista - Estomatologia - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['417','417 - Cirurgião-Dentista - Odontologia para Pacientes com Necessidades Especiais - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['418','418 - Educador Físico - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['419','419 - Enfermeiro - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['420','420 - Farmacêutico - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['421','421 - Fisioterapeuta - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['422','422 - Fonoaudiólogo - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['423','423 - Médico I - Clínica Médica/Clínico Geral - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['424','424 - Médico II - Ginecologia e Obstetrícia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['425','425 - Médico II - Pediatria - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['426','426 - Médico II - Cirurgia Geral - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['427','427 - Médico II - Traumato-Ortopedia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['428','428 - Médico II - Anestesiologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['429','429 - Médico II - Psiquiatria - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['430','430 - Médico II - Cardiologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['431','431 - Médico II - Medicina Intensiva - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['432','432 - Médico II - Nefrologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['433','433 - Médico II - Radiologia e Diagnóstico por Imagem - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['434','434 - Médico II - Oncologia Clínica e Cirúrgica - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['435','435 - Médico II - Dermatologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['436','436 - Médico II - Mastologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['437','437 - Médico II - Neurologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['438','438 - Médico II - Oftalmologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['439','439 - Médico II - Otorrinolaringologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['440','440 - Médico II - Cirurgia Pediátrica - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['441','441 - Médico II - Cirurgia Torácica - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['442','442 - Médico II - Coloproctologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['443','443 - Médico II - Alergia e Imunologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['445','445 - Médico II - Cirurgia Plástica - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['446','446 - Médico II - Cirurgia Vascular - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['447','447 - Médico II - Gastroenterologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['448','448 - Médico II - Infectologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['449','449 - Médico II - Medicina do Trabalho - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['450','450 - Médico II - Neurocirurgia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['451','451 - Médico II - Urologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['452','452 - Médico II - Acupuntura - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['453','453 - Médico II - Cirurgia Cardiovascular - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['454','454 - Médico II - Endocrinologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['455','455 - Médico II - Geriatria - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['456','456 - Médico II - Hematologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['457','457 - Médico II - Pneumologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['458','458 - Médico II - Reumatologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['459','459 - Médico II - Medicina Sanitária - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['460','460 - Médico III - Neonatologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['461','461 - Médico III - Endoscopia Digestiva - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['462','462 - Médico III - Cardiopediatria - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['463','463 - Médico III - Neuropediatria - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['464','464 - Médico III - Hepatologia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['465','465 - Médico III - Nefrologia Pediátrica - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['467','467 - Médico III - Pneumologia Pediátrica - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['468','468 - Médico III - Ultrassonografia - Conforme Anexo III do Edital de Abertura - R$ 200,00','200.00'],['469','469 - Médico Veterinário - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['470','470 - Musicoterapeuta - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['471','471 - Nutricionista - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['472','472 - Pedagogo - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['473','473 - Psicólogo - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00'],['474','474 - Terapeuta Ocupacional - Conforme Anexo III do Edital de Abertura - R$ 120,00','120.00']]
+    '1':[['1','1 - Professor de Arte-Educação - R$ 150,00','150.00'],['2','2 - Professor de Atendimento Educacional Especializado (AEE) - R$ 150,00','150.00'],['3','3 - Professor de Biologia - R$ 150,00','150.00'],['4','4 - Professor de Educação Física - R$ 150,00','150.00'],['5','5 - Professor de Filosofia - R$ 150,00','150.00'],['6','6 - Professor de Física - R$ 150,00','150.00'],['7','7 - Professor de Geografia - R$ 150,00','150.00'],['8','8 - Professor de História - R$ 150,00','150.00'],['9','9 - Professor de Língua Espanhola - R$ 150,00','150.00'],['10','10 - Professor de Língua Inglesa - R$ 150,00','150.00'],['11','11 - Professor de Língua Portuguesa - R$ 150,00','150.00'],['12','12 - Professor de Matemática - R$ 150,00','150.00'],['13','13 - Professor de Química - R$ 150,00','150.00'],['14','14 - Professor de Sociologia - R$ 150,00','150.00']]
   };
   function init(){
     var tipo=document.getElementById('CONCURSO_TIPO'), vaga=document.getElementById('VAGA');
@@ -808,7 +808,7 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
       vaga.innerHTML='';
       if(!list.length){ vaga.disabled=true; vaga.innerHTML='<option value="">Escolha o concurso primeiro</option>'; return; }
       vaga.disabled=false;
-      var o0=document.createElement('option'); o0.value=''; o0.textContent='Escolher o cargo'; vaga.appendChild(o0);
+      var o0=document.createElement('option'); o0.value=''; o0.textContent='Informe o Cargo'; vaga.appendChild(o0);
       list.forEach(function(c){ var o=document.createElement('option'); o.value=c[0]; o.setAttribute('data-price',c[2]); o.textContent=c[1]; vaga.appendChild(o); });
       if(keep){ vaga.value=keep; }
     }
@@ -827,34 +827,52 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
 </fieldset>
 <fieldset id="fs-prova-local">
 <label class="description">Local de Prova</label>
-<input type="hidden" id="UF_PROVA" name="UF_PROVA" value="AP">
+<input type="hidden" id="UF_PROVA" name="UF_PROVA" value="CE">
 <div class="fgv-field">
-<label><span class="error">*</span> Local de prova</label>
+<label><span class="error">*</span> Cidade de Prova</label>
 <select class="select" data-testid="select-municipio-prova" id="MUNICIPIO_PROVA" name="MUNICIPIO_PROVA" required="">
-<option value="" selected=""></option>
-<option value="LARANJAL DO JARI/AP">LARANJAL DO JARI/AP</option>
-<option value="MACAPÁ/AP">MACAPÁ/AP</option>
-<option value="OIAPOQUE/AP">OIAPOQUE/AP</option>
+<option value="" selected="">Informe a Cidade da Prova</option>
+<option value="ACARAÚ/CE">Acaraú</option>
+<option value="BATURITÉ/CE">Baturité</option>
+<option value="BREJO SANTO/CE">Brejo Santo</option>
+<option value="CAMOCIM/CE">Camocim</option>
+<option value="CANINDÉ/CE">Canindé</option>
+<option value="CRATEÚS/CE">Crateús</option>
+<option value="CRATO/CE">Crato</option>
+<option value="FORTALEZA/CE">Fortaleza</option>
+<option value="HORIZONTE/CE">Horizonte</option>
+<option value="ICÓ/CE">Icó</option>
+<option value="IGUATU/CE">Iguatu</option>
+<option value="ITAPIPOCA/CE">Itapipoca</option>
+<option value="JAGUARIBE/CE">Jaguaribe</option>
+<option value="JUAZEIRO DO NORTE/CE">Juazeiro do Norte</option>
+<option value="MARACANAÚ/CE">Maracanaú</option>
+<option value="QUIXADÁ/CE">Quixadá</option>
+<option value="RUSSAS/CE">Russas</option>
+<option value="SENADOR POMPEU/CE">Senador Pompeu</option>
+<option value="SOBRAL/CE">Sobral</option>
+<option value="TAUÁ/CE">Tauá</option>
+<option value="TIANGUÁ/CE">Tianguá</option>
 </select>
 </div>
 <div class="fgv-field">
 <label><span class="error">*</span> Local de lotação</label>
 <select class="select" data-testid="select-local-lotacao" id="LOCAL_LOTACAO" name="LOCAL_LOTACAO" required="">
-<option value="211 - Região I - Central (Municípios de abrangência: Macapá, Cutias, Itaubal, Ferreira Gomes, Porto Grande, Pedra Branca do Amapari e Serra do Navio)" selected="">211 - Região I - Central (Municípios de abrangência: Macapá, Cutias, Itaubal, Ferreira Gomes, Porto Grande, Pedra Branca do Amapari e Serra do Navio)</option>
+<option value="Estabelecimentos de Ensino da Rede Estadual do Ceará (escolha do local na convocação para nomeação)" selected="">Estabelecimentos de Ensino da Rede Estadual do Ceará (escolha do local na convocação para nomeação)</option>
 </select>
 </div>
 <script>
 (function(){
  document.addEventListener('DOMContentLoaded', function(){
    var uf = document.getElementById('UF_PROVA');
-   if(uf && uf.value !== 'AP'){ uf.value = 'AP'; }
+   if(uf && uf.value !== 'CE'){ uf.value = 'CE'; }
  });
 })();
 </script>
 </fieldset>
 <fieldset>
 <label style="text-align:left">
-<strong>É optante pela reserva de vagas prevista na Lei 5.309/2017 para os negros:</strong>
+<strong>É optante pela reserva de vagas prevista na Lei Estadual nº 17.432/2021 para pessoas negras:</strong>
 <span id="cotas_negros-list" style="display:none">
  Para os optantes desta reserva de vagas, favor cumprir as exigências do Edital.
  </span>
@@ -863,7 +881,7 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
  </fieldset>
 <fieldset>
 <label style="text-align:left">
-<strong>É optante pela reserva de vagas previstas na Lei 3113/94 para pessoas com deficiência:</strong>
+<strong>É optante pela reserva de vagas previstas na Lei Estadual nº 17.433/2021 para pessoas com deficiência:</strong>
 <span id="PORTADOR_DEFICIENCIA-list" style="display:none">
  Para os optantes desta reserva de vagas, favor cumprir as exigências do Edital.
  </span>
@@ -1285,7 +1303,7 @@ function __handleDocTipo(v){
           __cargo_codigo: vagaInfo.codigo,
           __cargo_titulo: vagaInfo.titulo,
           __taxa: vagaInfo.taxa,
-          __valor: vagaInfo.valor || 180,
+          __valor: vagaInfo.valor || 150,
           __vaga_label: vagaInfo.label
         });
         localStorage.setItem('inscricao_dados', JSON.stringify(ctx));
