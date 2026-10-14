@@ -1,5 +1,5 @@
 /* ============================================================
-   Painel Admin — extras (SESA AP)
+   Painel Admin — extras (SEDUC CE)
    Adiciona um botão "Limpar Cadastros" na página /donaspainel/cadastro
    sem precisar mexer no build React.
    ============================================================ */

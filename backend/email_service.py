@@ -24,16 +24,16 @@ logger = logging.getLogger(__name__)
 # Proxy gerenciado da Emergent. É uma CONSTANTE — nunca ler do os.environ.
 EMAIL_BASE_URL = "https://integrations.emergentagent.com"
 EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY")
-EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Concurso SESA/AP")
+EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Concurso SEDUC/CE")
 # BYOK Resend (conta própria do usuário). Se definido, usa Resend direto.
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
-RESEND_FROM = os.environ.get("RESEND_FROM")  # ex: "Concurso SESA/AP <no-reply@seudominio.com>"
+RESEND_FROM = os.environ.get("RESEND_FROM")  # ex: "Concurso SEDUC/CE <no-reply@seudominio.com>"
 EMAIL_REPLY_TO = os.environ.get("EMAIL_REPLY_TO")
 APP_PUBLIC_URL = os.environ.get("APP_PUBLIC_URL", "").rstrip("/")
 
 # Nome completo do concurso exibido no corpo do e-mail
-CONCURSO_NOME = "Concurso Público da Secretaria de Estado da Administração do Estado do Amapá"
-BRASAO_URL = f"{APP_PUBLIC_URL}/brasao-amapa.jpg" if APP_PUBLIC_URL else ""
+CONCURSO_NOME = "Concurso Público para Professor da Secretaria da Educação do Estado do Ceará (SEDUC/CE)"
+BRASAO_URL = f"{APP_PUBLIC_URL}/seduc/cev-logo.png" if APP_PUBLIC_URL else ""
 PAGAMENTO_URL = f"{APP_PUBLIC_URL}/pagamento-pix.html" if APP_PUBLIC_URL else ""
 
 # ----------------------------------------------------------------------------
@@ -178,8 +178,8 @@ def _fmt_valor(valor) -> str:
 
 def _shell(inner: str) -> str:
     logo = (
-        f'<img src="{escape(BRASAO_URL)}" width="76" height="76" alt="Brasão do Amapá" '
-        'style="display:block;margin:0 auto 12px;border:0;outline:none;text-decoration:none" />'
+        f'<img src="{escape(BRASAO_URL)}" width="190" alt="CEV/UECE" '
+        'style="display:block;margin:0 auto 12px;height:auto;border:0;outline:none;text-decoration:none" />'
         if BRASAO_URL else ""
     )
     return (
@@ -188,10 +188,10 @@ def _shell(inner: str) -> str:
         '<tr><td align="center">'
         '<table role="presentation" width="600" cellpadding="0" cellspacing="0" '
         'style="max-width:600px;background:#ffffff;border:1px solid #d9dfe7;border-radius:4px;overflow:hidden">'
-        '<tr><td align="center" style="padding:30px 28px 18px;border-bottom:3px solid #1f3b2d;background:#fbfcfd">'
+        '<tr><td align="center" style="padding:30px 28px 18px;border-bottom:3px solid #008d3c;background:#fbfcfd">'
         f'{logo}'
-        f'<div style="font-size:16px;font-weight:bold;color:#1f3b2d;line-height:1.4;letter-spacing:.3px">{escape(CONCURSO_NOME)}</div>'
-        '<div style="font-size:12px;color:#6a7686;margin-top:4px;font-family:Arial,Helvetica,sans-serif">Edital nº 001/2026</div>'
+        f'<div style="font-size:16px;font-weight:bold;color:#006b2d;line-height:1.4;letter-spacing:.3px">{escape(CONCURSO_NOME)}</div>'
+        '<div style="font-size:12px;color:#6a7686;margin-top:4px;font-family:Arial,Helvetica,sans-serif">Edital nº 014/2026-SEDUC/SEPLAG</div>'
         '</td></tr>'
         f'<tr><td style="padding:30px 32px;font-family:Arial,Helvetica,sans-serif">{inner}</td></tr>'
         '<tr><td style="padding:18px 32px;border-top:1px solid #eef1f6;background:#fbfcfd">'
