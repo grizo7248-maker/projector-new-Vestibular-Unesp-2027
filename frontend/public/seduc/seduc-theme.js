@@ -18,6 +18,7 @@ var HTML='<div class="top"><div class="top-in"><div><span>Portal da UECE</span><
 '<nav><a href="/inicio.html" data-testid="header-inicio-link">Início</a><a href="/inicio.html" data-testid="header-concursos-link">Concursos</a><a class="sair" href="/inicio.html" data-testid="header-sair-link">Sair</a></nav></div></div>';
 var MINHAS=/\/(inscricao-realizada|pagamento-pix)(\.html)?\/?$/.test(location.pathname);
 if(MINHAS)HTML=HTML.replace(/<nav>.*<\/nav>/,'<nav><a class="minhas" href="/minhas-inscricoes.html" data-testid="header-minhas-inscricoes-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg>Minhas inscrições</a></nav>');
+if(/\/minhas-inscricoes(\.html)?\/?$/.test(location.pathname))HTML=HTML.replace(/<nav>.*<\/nav>/,'');
 function inject(){
  if(document.getElementById('seduc-header-host'))return;
  var host=document.createElement('div');
