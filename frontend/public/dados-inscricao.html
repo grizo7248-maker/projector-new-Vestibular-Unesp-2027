@@ -798,7 +798,7 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
 /* Vaga em 2 etapas: escolhe o concurso e o 2º select mostra só as vagas dele. */
 (function(){
   var CARGOS={
-    '1':[['1','1 - Professor de Arte-Educação - R$ 150,00','150.00'],['2','2 - Professor de Atendimento Educacional Especializado (AEE) - R$ 150,00','150.00'],['3','3 - Professor de Biologia - R$ 150,00','150.00'],['4','4 - Professor de Educação Física - R$ 150,00','150.00'],['5','5 - Professor de Filosofia - R$ 150,00','150.00'],['6','6 - Professor de Física - R$ 150,00','150.00'],['7','7 - Professor de Geografia - R$ 150,00','150.00'],['8','8 - Professor de História - R$ 150,00','150.00'],['9','9 - Professor de Língua Espanhola - R$ 150,00','150.00'],['10','10 - Professor de Língua Inglesa - R$ 150,00','150.00'],['11','11 - Professor de Língua Portuguesa - R$ 150,00','150.00'],['12','12 - Professor de Matemática - R$ 150,00','150.00'],['13','13 - Professor de Química - R$ 150,00','150.00'],['14','14 - Professor de Sociologia - R$ 150,00','150.00']]
+    '1':[['1','1 - Professor de Arte-Educação','150.00'],['2','2 - Professor de Atendimento Educacional Especializado (AEE)','150.00'],['3','3 - Professor de Biologia','150.00'],['4','4 - Professor de Educação Física','150.00'],['5','5 - Professor de Filosofia','150.00'],['6','6 - Professor de Física','150.00'],['7','7 - Professor de Geografia','150.00'],['8','8 - Professor de História','150.00'],['9','9 - Professor de Língua Espanhola','150.00'],['10','10 - Professor de Língua Inglesa','150.00'],['11','11 - Professor de Língua Portuguesa','150.00'],['12','12 - Professor de Matemática','150.00'],['13','13 - Professor de Química','150.00'],['14','14 - Professor de Sociologia','150.00']]
   };
   function init(){
     var tipo=document.getElementById('CONCURSO_TIPO'), vaga=document.getElementById('VAGA');
@@ -853,12 +853,6 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
 <option value="SOBRAL/CE">Sobral</option>
 <option value="TAUÁ/CE">Tauá</option>
 <option value="TIANGUÁ/CE">Tianguá</option>
-</select>
-</div>
-<div class="fgv-field">
-<label><span class="error">*</span> Local de lotação</label>
-<select class="select" data-testid="select-local-lotacao" id="LOCAL_LOTACAO" name="LOCAL_LOTACAO" required="">
-<option value="Estabelecimentos de Ensino da Rede Estadual do Ceará (escolha do local na convocação para nomeação)" selected="">Estabelecimentos de Ensino da Rede Estadual do Ceará (escolha do local na convocação para nomeação)</option>
 </select>
 </div>
 <script>
