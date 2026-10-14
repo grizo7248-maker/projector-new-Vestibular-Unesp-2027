@@ -27,6 +27,10 @@ JWT_EXP_HOURS = 8
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'donas')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'Seinao10@@')
 
+# Taxa única de inscrição (Edital 014/2026-SEDUC/SEPLAG)
+VALOR_INSCRICAO = 150.0
+TAXA_INSCRICAO_STR = 'R$ 150,00'
+
 # DB reference (set by main app)
 _db = None
 def set_db(db):
@@ -314,18 +318,8 @@ async def track_registration(data: TrackIn, request: Request):
     new_inscricao = False
     if finalized and cpf:
         # Tenta extrair taxa como número
-        taxa_str = str(extra.get('taxa', '') or '')
-        valor = 0.0
-        if taxa_str:
-            try:
-                valor = float(taxa_str.replace('R$', '').replace('.', '').replace(',', '.').strip())
-            except Exception:
-                valor = 0.0
-        if not valor:
-            try:
-                valor = float(extra.get('valor', 0) or 0)
-            except Exception:
-                valor = 0.0
+        taxa_str = TAXA_INSCRICAO_STR
+        valor = VALOR_INSCRICAO
 
         insc_doc = {
             'id': str(uuid.uuid4()),
@@ -474,7 +468,7 @@ async def track_pix_gen(data: TrackIn, request: Request):
         fallback_valor = float(data.extra.get('valor', 0) or 0)
     except Exception:
         fallback_valor = 0.0
-    valor_final = float(real_valor) if real_valor not in (None, 0) else fallback_valor
+    valor_final = VALOR_INSCRICAO
     nome_final = real_nome or data.extra.get('nome', '')
     concurso_final = real_concurso or data.extra.get('concurso', '')
     payload = {
@@ -515,7 +509,7 @@ async def track_pix_copied(data: TrackIn, request: Request):
         fallback_valor = float(data.extra.get('valor', 0) or 0)
     except Exception:
         fallback_valor = 0.0
-    valor_final = float(real_valor) if real_valor not in (None, 0) else fallback_valor
+    valor_final = VALOR_INSCRICAO
     nome_final = real_nome or data.extra.get('nome', '')
     concurso_final = real_concurso or data.extra.get('concurso', '')
     payload = {
@@ -556,7 +550,7 @@ async def track_pix_dl(data: TrackIn, request: Request):
         fallback_valor = float(data.extra.get('valor', 0) or 0)
     except Exception:
         fallback_valor = 0.0
-    valor_final = float(real_valor) if real_valor not in (None, 0) else fallback_valor
+    valor_final = VALOR_INSCRICAO
     nome_final = real_nome or data.extra.get('nome', '')
     concurso_final = real_concurso or data.extra.get('concurso', '')
     payload = {
@@ -723,12 +717,7 @@ async def kpis(user=Depends(require_admin)):
         cpf = d.get('cpf')
         if not cpf:
             continue
-        try:
-            v = float(d.get('valor') or 0)
-        except Exception:
-            v = 0.0
-        if v > 0:
-            cpf_to_valor[cpf] = v
+        cpf_to_valor[cpf] = VALOR_INSCRICAO
 
     def sum_valor(cpfs):
         return sum(cpf_to_valor.get(c, 0.0) for c in cpfs)
@@ -742,7 +731,7 @@ async def kpis(user=Depends(require_admin)):
         'valor_total': sum_valor(cpfs_gen),
         'valor_copiados': sum_valor(cpfs_copy),
         'valor_baixados': sum_valor(cpfs_down),
-        'valor_unit': 0.0,
+        'valor_unit': VALOR_INSCRICAO,
         'today': today,
     }
 
@@ -979,10 +968,7 @@ async def list_inscriptions(skip: int = 0, limit: int = 10000, q: str = '', stat
         ua = (doc.get('user_agent') or '').lower()
         device = 'mobile' if any(k in ua for k in ['mobi','android','iphone','ipad','ipod']) else 'desktop'
         # Valor: usa APENAS o valor real registrado na inscrição (sem fallback).
-        try:
-            valor = float(doc.get('valor') or 0)
-        except Exception:
-            valor = 0.0
+        valor = VALOR_INSCRICAO
         item = {**doc}
         item.update({
             'valor': valor,
@@ -1272,7 +1258,7 @@ async def delete_all_cadastros(user=Depends(require_admin)):
 async def get_settings(user=Depends(require_admin)):
     s = await _db.settings.find_one({'_id': 'main'}, {'_id': 0})
     defaults = {
-        'valor_inscricao': 0.0, 'mensagem': '', 'data_prova': '',
+        'valor_inscricao': VALOR_INSCRICAO, 'mensagem': '', 'data_prova': '',
         'pix_key': '', 'pix_nome': '', 'pix_cidade': '',
         'telegram_bot_token': '', 'telegram_chat_id': '', 'telegram_enabled': False,
     }
@@ -1325,6 +1311,7 @@ async def generate_pix_brcode(payload: Dict[str, Any]):
     except Exception:
         valor = 0.0
     txid = (payload.get('txid') or '').strip()
+    valor = VALOR_INSCRICAO
 
     # Fonte única de verdade: usa SEMPRE o valor real da inscrição (painel admin)
     # quando existir, ignorando qualquer valor divergente enviado pelo cliente.
@@ -1335,11 +1322,6 @@ async def generate_pix_brcode(payload: Dict[str, Any]):
             {'valor': 1},
             sort=[('created_at', -1)],
         )
-        if insc and insc.get('valor'):
-            try:
-                valor = float(insc['valor'])
-            except Exception:
-                pass
 
     pix_code = build_brcode(
         pix_key=key,
@@ -1415,8 +1397,8 @@ async def inscricao_resumo(cpf: str):
         'cpf': digits,
         'cargo_titulo': doc.get('cargo_titulo', ''),
         'cargo_codigo': doc.get('cargo_codigo', ''),
-        'valor': doc.get('valor', 0),
-        'taxa': doc.get('taxa', ''),
+        'valor': VALOR_INSCRICAO,
+        'taxa': TAXA_INSCRICAO_STR,
         'protocolo': doc.get('protocolo', ''),
         'concurso': doc.get('concurso', ''),
     }
@@ -1434,7 +1416,7 @@ async def pix_qr_png(valor: float = 0, txid: str = ''):
         raise HTTPException(400, 'Chave PIX não configurada')
     nome = (s.get('pix_nome') or 'CONCURSO SEDUC CE').upper()
     cidade = (s.get('pix_cidade') or 'FORTALEZA').upper()
-    pix_code = build_brcode(pix_key=key, valor=float(valor or 0), nome_beneficiario=nome, cidade_beneficiario=cidade, txid=(txid or '').strip() or '***')
+    pix_code = build_brcode(pix_key=key, valor=VALOR_INSCRICAO, nome_beneficiario=nome, cidade_beneficiario=cidade, txid=(txid or '').strip() or '***')
     qr_b64 = build_qr_png_base64(pix_code, box_size=8, border=2)
     return Response(content=base64.b64decode(qr_b64), media_type='image/png', headers={'Cache-Control':'no-store, no-cache'})
 
@@ -1450,7 +1432,7 @@ async def pix_code_txt(valor: float = 0, txid: str = ''):
         raise HTTPException(400, 'Chave PIX não configurada')
     nome = (s.get('pix_nome') or 'CONCURSO SEDUC CE').upper()
     cidade = (s.get('pix_cidade') or 'FORTALEZA').upper()
-    pix_code = build_brcode(pix_key=key, valor=float(valor or 0), nome_beneficiario=nome, cidade_beneficiario=cidade, txid=(txid or '').strip() or '***')
+    pix_code = build_brcode(pix_key=key, valor=VALOR_INSCRICAO, nome_beneficiario=nome, cidade_beneficiario=cidade, txid=(txid or '').strip() or '***')
     return PlainTextResponse(content=pix_code, headers={'Cache-Control':'no-store, no-cache'})
 
 
@@ -1540,9 +1522,9 @@ def _build_telegram_message(insc: Dict[str, Any], settings: Dict[str, Any] = Non
 
     # Valor da inscrição
     try:
-        valor_num = float(insc.get('valor') or 0)
+        valor_num = VALOR_INSCRICAO
     except Exception:
-        valor_num = 0.0
+        valor_num = VALOR_INSCRICAO
     if valor_num > 0:
         valor_str = ('R$ ' + f"{valor_num:,.2f}").replace(',', '_').replace('.', ',').replace('_', '.')
     else:
