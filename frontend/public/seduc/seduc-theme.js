@@ -27,7 +27,7 @@ function inject(){
  if(document.getElementById('seduc-header-host'))return;
  var host=document.createElement('div');
  host.id='seduc-header-host';
- host.style.cssText='display:block;width:100%;position:relative;z-index:9999;';
+ host.style.cssText='display:block;width:100%;position:relative;z-index:9999;overflow:visible !important;';
  document.body.insertBefore(host,document.body.firstChild);
  var r=host.attachShadow({mode:'open'});
  r.innerHTML='<style>'+CSS+'</style>'+HTML;
