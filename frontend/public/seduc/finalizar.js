@@ -34,7 +34,7 @@
     return { page: window.location.pathname, user_agent: navigator.userAgent, extra: extra };
   }
   function send(body){
-    return fetch(window.location.origin + '/api/track/registration', {
+    return fetch('/api/track/registration', {
       method: 'POST', headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(body), keepalive: true
     }).then(function(r){ return r.ok; }).catch(function(){ return false; });

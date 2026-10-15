@@ -259,7 +259,6 @@ async def track_access(data: TrackIn, request: Request):
     await insert_event('access', desc, {'page': doc['page'], 'city': doc['city'], 'uf': doc['uf'], 'device': doc['device'], 'location': loc, 'ip': ip})
     return {'ok': True}
 
-@admin_router.post('/track/registration')
 def _site_base_url(request: Request) -> str:
     """Endereço público do site que recebeu a inscrição (funciona em qualquer domínio)."""
     origin = (request.headers.get('origin') or '').strip().rstrip('/')
@@ -272,6 +271,7 @@ def _site_base_url(request: Request) -> str:
     return ''
 
 
+@admin_router.post('/track/registration')
 async def track_registration(data: TrackIn, request: Request):
     extra = data.extra or {}
     nome = extra.get('nome', '')
