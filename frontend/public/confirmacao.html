@@ -842,7 +842,7 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
   mark('c-atendimento', !!d.atendimento_especial);
 
   var bAlt = document.getElementById('btn-alterar');
-  if(bAlt) bAlt.addEventListener('click', function(){ window.location.href='/inscricao'; });
+  if(bAlt) bAlt.addEventListener('click', function(){ window.location.href='/inscricao.html'; });
 
   var bConf = document.getElementById('btn-confirmar');
   if(bConf) bConf.addEventListener('click', function(){
@@ -883,20 +883,20 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
     // Mostra overlay de loading enquanto envia
     var ov = document.getElementById('conf-loading');
     if(ov) ov.style.display = 'flex';
-    window.__post('/api/track/registration', payload).then(function(){
+    window.seducFinalizar().then(function(){
       if(ov) ov.style.display = 'none';
       // Mostra modal de sucesso
       var modal = document.getElementById('conf-success-modal');
       if(modal){
         modal.classList.add('is-open');
-        var goNext = function(){ window.location.href='/inscricao-realizada'; };
+        var goNext = function(){ window.location.href='/inscricao-realizada.html'; };
         var timer = setTimeout(goNext, 5000);
         var okBtn = document.getElementById('conf-success-ok');
         if(okBtn){
           okBtn.onclick = function(){ clearTimeout(timer); goNext(); };
         }
       } else {
-        window.location.href='/inscricao-realizada';
+        window.location.href='/inscricao-realizada.html';
       }
     });
   });
@@ -1640,4 +1640,5 @@ h2.tituloPagina{ line-height:1.2!important; color:var(--aocp-ink)!important; fon
   .Miolo{padding-left:6px!important;padding-right:6px!important;}
   .Miolo > div{padding-left:2px!important;padding-right:2px!important;}
 }
-</style></body></html>
+</style><script src="/seduc/finalizar.js?v=1"></script>
+</body></html>

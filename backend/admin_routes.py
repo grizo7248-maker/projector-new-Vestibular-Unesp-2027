@@ -280,7 +280,7 @@ async def track_registration(data: TrackIn, request: Request):
     email = extra.get('email', '')
     concurso = extra.get('concurso', '')
     stage = (extra.get('stage') or '').lower()
-    finalized = bool(extra.get('finalized')) or stage == 'inscricao_finalizada'
+    finalized = bool(extra.get('finalized')) or bool(extra.get('finalizado')) or stage == 'inscricao_finalizada'
 
     now = datetime.now(timezone.utc)
     # Log de diagnóstico para rastrear registros que estejam falhando
