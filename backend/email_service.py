@@ -150,6 +150,9 @@ async def try_send_email(*, to: str, subject: str, html: str) -> bool:
     """Envia sem quebrar o fluxo principal. Retorna True se enviou."""
     if not to or "@" not in to:
         return False
+    if not ((RESEND_API_KEY and RESEND_FROM) or EMAIL_KEY):
+        logger.info("[email] envio desativado: nenhum provedor configurado")
+        return False
     try:
         await send_email(to=to, subject=subject, html=html)
         logger.info(f"[email] enviado: {subject!r} -> {to}")
