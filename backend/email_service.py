@@ -35,8 +35,6 @@ APP_PUBLIC_URL = os.environ.get("APP_PUBLIC_URL", "").rstrip("/")
 CONCURSO_NOME = "Concurso Público da Secretaria da Educação do Estado do Ceará (SEDUC/CE)"
 EDITAL = "Edital nº 014/2026-SEDUC/SEPLAG"
 PRAZO = "15/10/2026, às 23h59 (horário de Brasília)"
-BRASAO_URL = f"{APP_PUBLIC_URL}/seduc/email-logo.png" if APP_PUBLIC_URL else ""
-PAGAMENTO_URL = f"{APP_PUBLIC_URL}/pagamento-pix.html" if APP_PUBLIC_URL else ""
 
 # ----------------------------------------------------------------------------
 # Guardrail gate (copiado do playbook — chamar em todo envio)
@@ -181,11 +179,13 @@ def _fmt_valor(valor) -> str:
     return "R$ " + f"{v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
-def _shell(inner: str) -> str:
+def _shell(inner: str, base: str = "") -> str:
+    base = (APP_PUBLIC_URL or base).rstrip("/")
+    logo_url = f"{base}/seduc/email-logo.png" if base else ""
     logo = (
-        f'<img src="{escape(BRASAO_URL)}" width="320" alt="CEV - Comissão Executiva do Vestibular da UECE" '
+        f'<img src="{escape(logo_url)}" width="320" alt="CEV - Comissão Executiva do Vestibular da UECE" '
         'style="display:block;margin:0 auto 16px;width:320px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none" />'
-        if BRASAO_URL else ""
+        if logo_url else ""
     )
     return (
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
@@ -233,7 +233,9 @@ def _row(label: str, value: str) -> str:
 
 
 def build_inscricao_email_html(*, nome: str, cpf: str, protocolo: str, cargo: str,
-                               concurso: str, valor) -> str:
+                               concurso: str, valor, base_url: str = "") -> str:
+    base = (APP_PUBLIC_URL or base_url).rstrip("/")
+    pagamento_url = f"{base}/pagamento-pix.html" if base else ""
     cargo = re.sub(r"^\s*\d+\s*-\s*", "", re.sub(r"\s*-\s*R\$\s*[\d.,]+\s*$", "", cargo or "")).strip()
     rows = _row("Número da inscrição:", protocolo or "-")
     rows += _row("Nome:", nome or "-")
@@ -254,14 +256,14 @@ def build_inscricao_email_html(*, nome: str, cpf: str, protocolo: str, cargo: st
         '<p style="margin:20px 0 0;font-size:14px;color:#2b3a30;line-height:1.6">'
         'Para concluir esta inscrição, que está <strong>pendente</strong>, realize o pagamento da taxa via PIX.'
         '</p>'
-        f'{_button("Pagar inscrição", (PAGAMENTO_URL + "?cpf=" + re.sub(r"[^0-9]", "", cpf or "")) if PAGAMENTO_URL else "")}'
+        f'{_button("Pagar inscrição", (pagamento_url + "?cpf=" + re.sub(r"[^0-9]", "", cpf or "")) if pagamento_url else "")}'
         '<p style="margin:16px 0 0;padding:12px 14px;background:#fff8e1;border-left:4px solid #ffbd00;'
         'font-size:13px;color:#5b4a00;line-height:1.5">'
         f'As inscrições encerram-se em <strong>{escape(PRAZO)}</strong>. '
         'A inscrição só é confirmada após o pagamento.'
         '</p>'
     )
-    return _shell(inner)
+    return _shell(inner, base)
 
 
 def build_pix_email_html(*, nome: str, cpf: str, cargo: str, valor, pix_code: str) -> str:

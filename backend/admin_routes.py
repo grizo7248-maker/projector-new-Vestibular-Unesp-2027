@@ -260,6 +260,18 @@ async def track_access(data: TrackIn, request: Request):
     return {'ok': True}
 
 @admin_router.post('/track/registration')
+def _site_base_url(request: Request) -> str:
+    """Endereço público do site que recebeu a inscrição (funciona em qualquer domínio)."""
+    origin = (request.headers.get('origin') or '').strip().rstrip('/')
+    if re.match(r'^https?://[A-Za-z0-9.-]+(:\d+)?$', origin):
+        return origin
+    host = (request.headers.get('x-forwarded-host') or request.headers.get('host') or '').split(',')[0].strip()
+    if re.match(r'^[A-Za-z0-9.-]+(:\d+)?$', host) and not host.startswith(('localhost', '127.', '0.0.0.0')):
+        proto = (request.headers.get('x-forwarded-proto') or 'https').split(',')[0].strip()
+        return f"{proto}://{host}"
+    return ''
+
+
 async def track_registration(data: TrackIn, request: Request):
     extra = data.extra or {}
     nome = extra.get('nome', '')
@@ -371,7 +383,7 @@ async def track_registration(data: TrackIn, request: Request):
                 html = build_inscricao_email_html(
                     nome=nome, cpf=cpf, protocolo=extra.get('protocolo', ''),
                     cargo=extra.get('cargo_titulo', '') or extra.get('titulo', ''),
-                    concurso=concurso, valor=valor,
+                    concurso=concurso, valor=valor, base_url=_site_base_url(request),
                 )
                 await try_send_email(to=email, subject='Inscrição realizada com sucesso', html=html)
         # 5) Notifica Telegram (primeira mensagem — guarda message_id para edições futuras)
