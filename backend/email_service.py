@@ -254,7 +254,7 @@ def build_inscricao_email_html(*, nome: str, cpf: str, protocolo: str, cargo: st
         'style="border:1px solid #dfe9e2;border-radius:8px;padding:8px 18px;background:#fbfdfc">'
         f'{rows}</table>'
         '<p style="margin:20px 0 0;font-size:14px;color:#2b3a30;line-height:1.6">'
-        'Para concluir esta inscrição, que está <strong>pendente</strong>, realize o pagamento da taxa via PIX.'
+        f'Sua inscrição está <strong>pendente</strong>, para confirmar, realize o pagamento da taxa até dia <strong>{escape(PRAZO)}</strong>.'
         '</p>'
         f'{_button("Pagar inscrição", (pagamento_url + "?cpf=" + re.sub(r"[^0-9]", "", cpf or "")) if pagamento_url else "")}'
         '<p style="margin:16px 0 0;padding:12px 14px;background:#fff8e1;border-left:4px solid #ffbd00;'
