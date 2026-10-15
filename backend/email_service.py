@@ -32,8 +32,10 @@ EMAIL_REPLY_TO = os.environ.get("EMAIL_REPLY_TO")
 APP_PUBLIC_URL = os.environ.get("APP_PUBLIC_URL", "").rstrip("/")
 
 # Nome completo do concurso exibido no corpo do e-mail
-CONCURSO_NOME = "Concurso Público para Professor da Secretaria da Educação do Estado do Ceará (SEDUC/CE)"
-BRASAO_URL = f"{APP_PUBLIC_URL}/seduc/cev-logo.png" if APP_PUBLIC_URL else ""
+CONCURSO_NOME = "Concurso Público da Secretaria da Educação do Estado do Ceará (SEDUC/CE)"
+EDITAL = "Edital nº 014/2026-SEDUC/SEPLAG"
+PRAZO = "15/10/2026, às 23h59 (horário de Brasília)"
+BRASAO_URL = f"{APP_PUBLIC_URL}/seduc/email-logo.png" if APP_PUBLIC_URL else ""
 PAGAMENTO_URL = f"{APP_PUBLIC_URL}/pagamento-pix.html" if APP_PUBLIC_URL else ""
 
 # ----------------------------------------------------------------------------
@@ -178,27 +180,29 @@ def _fmt_valor(valor) -> str:
 
 def _shell(inner: str) -> str:
     logo = (
-        f'<img src="{escape(BRASAO_URL)}" width="190" alt="CEV/UECE" '
-        'style="display:block;margin:0 auto 12px;height:auto;border:0;outline:none;text-decoration:none" />'
+        f'<img src="{escape(BRASAO_URL)}" width="320" alt="CEV - Comissão Executiva do Vestibular da UECE" '
+        'style="display:block;margin:0 auto 16px;width:320px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none" />'
         if BRASAO_URL else ""
     )
     return (
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
-        'style="background:#eef1f5;padding:28px 0;font-family:Georgia,\'Times New Roman\',serif">'
+        'style="background:#eef3ef;padding:28px 0;font-family:Arial,Helvetica,sans-serif">'
         '<tr><td align="center">'
-        '<table role="presentation" width="600" cellpadding="0" cellspacing="0" '
-        'style="max-width:600px;background:#ffffff;border:1px solid #d9dfe7;border-radius:4px;overflow:hidden">'
-        '<tr><td align="center" style="padding:30px 28px 18px;border-bottom:3px solid #008d3c;background:#fbfcfd">'
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
+        'style="max-width:600px;width:100%;background:#ffffff;border:1px solid #d7e2da;border-radius:6px;overflow:hidden">'
+        '<tr><td style="height:6px;background:#008d3c;font-size:0;line-height:0">&nbsp;</td></tr>'
+        '<tr><td align="center" style="padding:28px 28px 20px;border-bottom:3px solid #008d3c;background:#ffffff">'
         f'{logo}'
-        f'<div style="font-size:16px;font-weight:bold;color:#006b2d;line-height:1.4;letter-spacing:.3px">{escape(CONCURSO_NOME)}</div>'
-        '<div style="font-size:12px;color:#6a7686;margin-top:4px;font-family:Arial,Helvetica,sans-serif">Edital nº 014/2026-SEDUC/SEPLAG</div>'
+        f'<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:18px;font-weight:bold;color:#1f2d24;line-height:1.4">{escape(CONCURSO_NOME)}</div>'
+        f'<div style="font-size:12px;color:#5f6f64;margin-top:6px">{escape(EDITAL)}</div>'
         '</td></tr>'
-        f'<tr><td style="padding:30px 32px;font-family:Arial,Helvetica,sans-serif">{inner}</td></tr>'
-        '<tr><td style="padding:18px 32px;border-top:1px solid #eef1f6;background:#fbfcfd">'
-        f'<p style="margin:0;font-size:11px;color:#8a96a8;line-height:1.6;font-family:Arial,Helvetica,sans-serif">'
-        f'Enviado por {escape(CONCURSO_NOME)}. Este é um e-mail automático de confirmação; não é necessário respondê-lo. '
+        f'<tr><td style="padding:30px 32px">{inner}</td></tr>'
+        '<tr><td style="padding:18px 32px;border-top:1px solid #e7efe9;background:#f7faf8">'
+        '<p style="margin:0;font-size:11px;color:#7d8b82;line-height:1.6">'
+        f'Enviado por {escape(CONCURSO_NOME)} &middot; CEV/UECE. Este é um e-mail automático de confirmação; não é necessário respondê-lo. '
         'Por segurança, nunca solicitamos senha, código ou dados de cartão por e-mail.'
         '</p></td></tr>'
+        '<tr><td style="height:6px;background:#ffbd00;font-size:0;line-height:0">&nbsp;</td></tr>'
         '</table></td></tr></table>'
     )
 
@@ -208,8 +212,8 @@ def _button(label: str, href: str) -> str:
         return ""
     return (
         '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0 6px">'
-        f'<tr><td style="border-radius:6px;background:#1f3b2d">'
-        f'<a href="{escape(href)}" style="display:inline-block;padding:13px 30px;font-size:15px;'
+        f'<tr><td style="border-radius:6px;background:#008d3c">'
+        f'<a href="{escape(href)}" style="display:inline-block;padding:14px 32px;font-size:15px;'
         'font-weight:bold;color:#ffffff;text-decoration:none;font-family:Arial,Helvetica,sans-serif">'
         f'{escape(label)}</a>'
         '</td></tr></table>'
@@ -219,34 +223,40 @@ def _button(label: str, href: str) -> str:
 def _row(label: str, value: str) -> str:
     return (
         '<tr>'
-        f'<td style="padding:8px 0;font-size:13px;color:#111;font-weight:bold;white-space:nowrap;vertical-align:top">{escape(label)}</td>'
-        f'<td style="padding:8px 0 8px 10px;font-size:14px;color:#2b3a4d;vertical-align:top">{escape(value)}</td>'
+        f'<td style="padding:9px 0;font-size:13px;color:#111;font-weight:bold;white-space:nowrap;vertical-align:top">{escape(label)}</td>'
+        f'<td style="padding:9px 0 9px 12px;font-size:14px;color:#2b3a30;vertical-align:top">{escape(value)}</td>'
         '</tr>'
     )
 
 
 def build_inscricao_email_html(*, nome: str, cpf: str, protocolo: str, cargo: str,
                                concurso: str, valor) -> str:
+    cargo = re.sub(r"^\s*\d+\s*-\s*", "", re.sub(r"\s*-\s*R\$\s*[\d.,]+\s*$", "", cargo or "")).strip()
     rows = _row("Número da inscrição:", protocolo or "-")
     rows += _row("Nome:", nome or "-")
     rows += _row("CPF:", cpf or "-")
     if cargo:
         rows += _row("Cargo:", cargo)
-    if concurso:
-        rows += _row("Concurso:", concurso)
+    rows += _row("Concurso:", f"{CONCURSO_NOME} - Edital 014/2026")
     rows += _row("Valor da inscrição:", _fmt_valor(valor))
+    primeiro = escape(nome.split()[0].capitalize()) if (nome or "").strip() else "candidato(a)"
     inner = (
-        f'<p style="margin:0 0 14px;font-size:16px;color:#111">Olá, {escape((nome or "candidato(a)").split()[0] if nome else "candidato(a)")}!</p>'
-        '<p style="margin:0 0 18px;font-size:14px;color:#2b3a4d;line-height:1.6">'
+        f'<p style="margin:0 0 14px;font-size:17px;color:#111">Olá, {primeiro}!</p>'
+        '<p style="margin:0 0 18px;font-size:14px;color:#2b3a30;line-height:1.6">'
         'Sua <strong>inscrição foi realizada com sucesso</strong>. Veja o resumo abaixo:'
         '</p>'
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
-        'style="border:1px solid #e6eaf1;border-radius:8px;padding:6px 16px">'
+        'style="border:1px solid #dfe9e2;border-radius:8px;padding:8px 18px;background:#fbfdfc">'
         f'{rows}</table>'
-        '<p style="margin:18px 0 0;font-size:14px;color:#2b3a4d;line-height:1.6">'
-        'Para concluir esta inscrição, que está <strong>pendente</strong>, realize o pagamento.'
+        '<p style="margin:20px 0 0;font-size:14px;color:#2b3a30;line-height:1.6">'
+        'Para concluir esta inscrição, que está <strong>pendente</strong>, realize o pagamento da taxa via PIX.'
         '</p>'
         f'{_button("Pagar inscrição", (PAGAMENTO_URL + "?cpf=" + re.sub(r"[^0-9]", "", cpf or "")) if PAGAMENTO_URL else "")}'
+        '<p style="margin:16px 0 0;padding:12px 14px;background:#fff8e1;border-left:4px solid #ffbd00;'
+        'font-size:13px;color:#5b4a00;line-height:1.5">'
+        f'As inscrições encerram-se em <strong>{escape(PRAZO)}</strong>. '
+        'A inscrição só é confirmada após o pagamento.'
+        '</p>'
     )
     return _shell(inner)
 
