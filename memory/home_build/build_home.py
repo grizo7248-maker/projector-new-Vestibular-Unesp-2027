@@ -34,3 +34,13 @@ else:
     s += extra + '</body></html>'
 open('/app/frontend/public/inicio.html', 'w', encoding='utf-8').write(s)
 print('ok', len(s), 'external left:', set(re.findall(r'(?:href|src|action)=["\']?(https?://[^"\'\s>]+)', s)))
+
+# termos.html: mesmo cabeçalho/rodapé da home
+t = s
+a = t.find('<section id=conteudoPrincipal>')
+b = t.find('<footer id=rodape>')
+end = t.rfind('</div>', a, b)
+t = t[:a] + open('/app/memory/home_build/termos_main.html', encoding='utf-8').read() + '\n ' + t[end:]
+t = t.replace('<title>Vestibular Unesp 2027 | Universidade Estadual Paulista - UNESP</title>', '<title>Termos de Inscrição | Vestibular Unesp 2027</title>')
+open('/app/frontend/public/termos.html', 'w', encoding='utf-8').write(t)
+print('termos ok', len(t))
