@@ -26,6 +26,7 @@ s = s.replace('<meta name=viewport content="width=device-width, initial-scale=1,
               '<meta name=format-detection content="telephone=no"><meta name=theme-color content="#ffffff">'
               '<meta name=apple-mobile-web-app-capable content=yes>')
 
+s = s.replace('<div class=course-description>\n <p>\n A Unesp oferece', '<div class=course-description>\n <p data-testid=home-aviso-importante><strong>AVISO IMPORTANTE | VESTIBULAR UNESP 2027</strong><br>O período de inscrições para o Vestibular Unesp 2027 se encerra em 20 de outubro de 2026, às 23h59.<br>Os candidatos interessados devem realizar a inscrição dentro do prazo estabelecido, evitando imprevistos de última hora.<br><strong>Prazo final:</strong> 20/10/2026, às 23h59.</p>\n <p>\n A Unesp oferece', 1)
 extra = open('/app/memory/home_build/home_extra.html', encoding='utf-8').read()
 if '</body>' in s:
     s = s.replace('</body>', extra + '</body>', 1)
