@@ -4,14 +4,14 @@
 @font-face{font-family:"OpenSans-Bold";src:url(/seduc/OpenSans-Bold.ttf) format("truetype");font-display:swap}
 @font-face{font-family:"Geomanist Regular";src:url(/seduc/Geomanist-Regular.woff) format("woff");font-display:swap}
 body{font-family:"OpenSans-Regular",Helvetica,Arial,sans-serif}
-html body .aocp-edital-card{border:1px solid #d9e6dd!important;border-radius:6px!important;overflow:hidden;font-family:"OpenSans-Regular",Helvetica,Arial,sans-serif!important}
-html body .aocp-edital-card .aec-head{background:#008d3c!important;border-bottom:0!important}
+html body .aocp-edital-card{border:1px solid #d3e3f6!important;border-radius:6px!important;overflow:hidden;font-family:"OpenSans-Regular",Helvetica,Arial,sans-serif!important}
+html body .aocp-edital-card .aec-head{background:#1172db!important;border-bottom:0!important}
 html body .aocp-edital-card .aec-head h3{color:#fff!important;font-family:"OpenSans-Semibold",Helvetica,Arial,sans-serif!important;font-size:19px!important}
 html body .aocp-edital-card .aec-body{align-items:center!important}
 html body .aocp-edital-card .aec-body img{width:210px!important;background:none!important}
 html body .aocp-edital-card strong{font-family:"OpenSans-Semibold",Helvetica,Arial,sans-serif}
 @media(max-width:640px){html body .aocp-edital-card .aec-head h3{font-size:13px!important}html body .aocp-edital-card .aec-body img{width:140px!important}html body .aocp-edital-card .aec-body .aec-txt{font-size:12px!important;line-height:1.5!important}}
-.seduc-footer{background:#fff;border-top:3px solid #008442;padding:28px 15px 10px;margin-top:40px;font-family:"OpenSans-Regular",Helvetica,Arial,sans-serif;color:#485156;position:relative;z-index:100}
+.seduc-footer{background:#fff;border-top:3px solid #1172db;padding:28px 15px 10px;margin-top:40px;font-family:"OpenSans-Regular",Helvetica,Arial,sans-serif;color:#485156;position:relative;z-index:100}
 .seduc-footer .sf-in{max-width:1140px;margin:0 auto;display:flex;gap:40px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
 .seduc-footer .sf-site{text-align:center;min-width:180px}
 .seduc-footer .sf-site h2{font:1.05em "OpenSans-Semibold",Helvetica,Arial,sans-serif;text-transform:uppercase;color:#485156;margin:0 0 14px}

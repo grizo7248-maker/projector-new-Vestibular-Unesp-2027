@@ -223,3 +223,12 @@ Pendências/observações: imagem decorativa do login do painel (Tartaruga Ninja
 - 2026-10: Adicionado bloco "AVISO IMPORTANTE | VESTIBULAR UNESP 2027" (prazo 20/10/2026 23h59) acima do texto da Unesp; .course-description com altura automática (antes cortava texto no mobile).
 - 2026-10: termos.html regenerada com cabeçalho/rodapé VUNESP (mesmo da home) e informações Vestibular Unesp 2027; checkbox -> Continuar -> /inscricao.html; Voltar -> /. Gerada por build_home.py + termos_main.html. Backups movidos para /app/memory/backups. Testado iteration_28 (100%). Pendente: páginas inscricao/confirmacao etc. ainda com layout CEV/SEDUC; menu hamburguer mobile vazio (veio assim do arquivo).
 - 2026-10: termos.html — removidos barra de busca, categorias e breadcrumb (só cabeçalho VUNESP + card + rodapé).
+
+## Change log — 2026-10 (Rebrand total -> Vestibular Unesp 2027 / VUNESP)
+- Páginas públicas (inscricao, dados-inscricao, confirmacao, inscricao-realizada, pagamento-pix, minhas-inscricoes) geradas por /app/memory/home_build/build_pages.py a partir dos originais em /app/memory/backups/pages_seduc (NÃO editar as páginas direto; editar o script e rodar).
+- Cabeçalho/rodapé VUNESP injetados via /seduc/seduc-theme.js (Shadow DOM) usando /vunesp/chrome.css, /vunesp/fonts.css, /vunesp/parts.json (gerados do inicio.html). Botão "Minhas inscrições" no header em inscricao-realizada/pagamento-pix.
+- Textos: card "VESTIBULAR | VESTIBULAR UNESP 2027", código VNSP2514; cores verdes -> azul VUNESP #1172db.
+- Taxa: R$ 225,00 para todos (CARGOS data-price, backend VALOR_INSCRICAO, DB settings.valor_inscricao).
+- E-mail (email_service.py) e Telegram titulo -> Vestibular Unesp 2027; RESEND_FROM display name atualizado; logo e-mail /seduc/email-logo-vunesp.png.
+- Admin bundle: "Concurso SEDUC CE" -> "Vestibular Unesp 2027". DB pix_nome/pix_cidade atualizados.
+- PENDENTE (usuário vai enviar): trocar cargos (Professor) por cursos e locais de prova (ainda CE).

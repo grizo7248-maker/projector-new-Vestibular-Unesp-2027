@@ -1,5 +1,5 @@
 /* ============================================================
-   Painel Admin — extras (SEDUC CE)
+   Painel Admin — extras (Vestibular Unesp 2027)
    Adiciona um botão "Limpar Cadastros" na página /donaspainel/cadastro
    sem precisar mexer no build React.
    ============================================================ */

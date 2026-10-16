@@ -24,16 +24,16 @@ logger = logging.getLogger(__name__)
 # Proxy gerenciado da Emergent. É uma CONSTANTE — nunca ler do os.environ.
 EMAIL_BASE_URL = "https://integrations.emergentagent.com"
 EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY")
-EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Concurso SEDUC/CE")
+EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Vestibular Unesp 2027")
 # BYOK Resend (conta própria do usuário). Se definido, usa Resend direto.
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
-RESEND_FROM = os.environ.get("RESEND_FROM")  # ex: "Concurso SEDUC/CE <no-reply@seudominio.com>"
+RESEND_FROM = os.environ.get("RESEND_FROM")  # ex: "Vestibular Unesp 2027 <no-reply@seudominio.com>"
 EMAIL_REPLY_TO = os.environ.get("EMAIL_REPLY_TO")
 APP_PUBLIC_URL = os.environ.get("APP_PUBLIC_URL", "").rstrip("/")
 
 # Nome completo do concurso exibido no corpo do e-mail
-CONCURSO_NOME = "Concurso Público da Secretaria da Educação do Estado do Ceará (SEDUC/CE)"
-EDITAL = "Edital nº 014/2026-SEDUC/SEPLAG"
+CONCURSO_NOME = "Vestibular Unesp 2027 - Fundação VUNESP"
+EDITAL = "VNSP2514"
 PRAZO = "15/10/2026, às 23h59 (horário de Brasília)"
 
 # ----------------------------------------------------------------------------
@@ -181,9 +181,9 @@ def _fmt_valor(valor) -> str:
 
 def _shell(inner: str, base: str = "") -> str:
     base = (APP_PUBLIC_URL or base).rstrip("/")
-    logo_url = f"{base}/seduc/email-logo.png" if base else ""
+    logo_url = f"{base}/seduc/email-logo-vunesp.png" if base else ""
     logo = (
-        f'<img src="{escape(logo_url)}" width="320" alt="CEV - Comissão Executiva do Vestibular da UECE" '
+        f'<img src="{escape(logo_url)}" width="135" alt="Fundação VUNESP" '
         'style="display:block;margin:0 auto 16px;width:320px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none" />'
         if logo_url else ""
     )
@@ -193,8 +193,8 @@ def _shell(inner: str, base: str = "") -> str:
         '<tr><td align="center">'
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
         'style="max-width:600px;width:100%;background:#ffffff;border:1px solid #d7e2da;border-radius:6px;overflow:hidden">'
-        '<tr><td style="height:6px;background:#008d3c;font-size:0;line-height:0">&nbsp;</td></tr>'
-        '<tr><td align="center" style="padding:28px 28px 20px;border-bottom:3px solid #008d3c;background:#ffffff">'
+        '<tr><td style="height:6px;background:#1172db;font-size:0;line-height:0">&nbsp;</td></tr>'
+        '<tr><td align="center" style="padding:28px 28px 20px;border-bottom:3px solid #1172db;background:#ffffff">'
         f'{logo}'
         f'<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:18px;font-weight:bold;color:#1f2d24;line-height:1.4">{escape(CONCURSO_NOME)}</div>'
         f'<div style="font-size:12px;color:#5f6f64;margin-top:6px">{escape(EDITAL)}</div>'
@@ -202,7 +202,7 @@ def _shell(inner: str, base: str = "") -> str:
         f'<tr><td style="padding:30px 32px">{inner}</td></tr>'
         '<tr><td style="padding:18px 32px;border-top:1px solid #e7efe9;background:#f7faf8">'
         '<p style="margin:0;font-size:11px;color:#7d8b82;line-height:1.6">'
-        f'Enviado por {escape(CONCURSO_NOME)} &middot; CEV/UECE. Este é um e-mail automático de confirmação; não é necessário respondê-lo. '
+        f'Enviado por {escape(CONCURSO_NOME)}. Este é um e-mail automático de confirmação; não é necessário respondê-lo. '
         'Por segurança, nunca solicitamos senha, código ou dados de cartão por e-mail.'
         '</p></td></tr>'
         '<tr><td style="height:6px;background:#ffbd00;font-size:0;line-height:0">&nbsp;</td></tr>'
@@ -215,7 +215,7 @@ def _button(label: str, href: str) -> str:
         return ""
     return (
         '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0 6px">'
-        f'<tr><td style="border-radius:6px;background:#008d3c">'
+        f'<tr><td style="border-radius:6px;background:#1172db">'
         f'<a href="{escape(href)}" style="display:inline-block;padding:14px 32px;font-size:15px;'
         'font-weight:bold;color:#ffffff;text-decoration:none;font-family:Arial,Helvetica,sans-serif">'
         f'{escape(label)}</a>'
