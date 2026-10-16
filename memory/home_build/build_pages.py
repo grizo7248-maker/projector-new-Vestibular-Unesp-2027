@@ -60,7 +60,10 @@ for p in PAGES:
         t = t.replace(old, old + "\n      if(el.type==='radio'){ var g=form.querySelector('input[name=\"'+el.name+'\"]:checked'); if(!g) ok=false; continue; }", 1)
         old2 = "            if(el.type === 'checkbox'){"
         assert old2 in t
-        t = t.replace(old2, "            if(el.type === 'radio'){ var rr=form.querySelector('input[name=\"'+k+'\"][value=\"'+String(saved[k]).replace(/\"/g,'')+'\"]'); if(rr){ rr.checked=true; rr.dispatchEvent(new Event('change',{bubbles:true})); } return; }\n" + old2, 1)
+        t = t.replace(old2, "            if(el.type === 'radio'){ var sv=String(saved[k]||'').toUpperCase(); var rr=Array.prototype.find.call(form.querySelectorAll('input[name=\"'+k+'\"]'), function(r){ return String(r.value).toUpperCase()===sv; }); if(rr){ rr.checked=true; rr.dispatchEvent(new Event('change',{bubbles:true})); } return; }\n" + old2, 1)
+        old3 = "el.type==='checkbox' || el.type==='submit') return;"
+        assert old3 in t
+        t = t.replace(old3, "el.type==='checkbox' || el.type==='radio' || el.type==='submit') return;", 1)
     if p == 'confirmacao.html':
         row = '<div class="conf-row"><span class="conf-lbl">Sexo</span><span class="conf-val" data-testid="c-sexo" id="c-sexo">—</span></div>'
         assert row in t

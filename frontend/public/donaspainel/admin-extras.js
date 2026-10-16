@@ -509,26 +509,31 @@
       ]);
       var formHtml = '';
       if (fd && Object.keys(fd).length) {
+        var SEXOS = {'0':'Masculino','1':'Feminino','2':'Intersexo','3':'Outro','4':'Prefiro não informar'};
+        var sx = fd.SEXO != null && fd.SEXO !== '' ? (SEXOS[String(fd.SEXO)] || fd.SEXO) : fd.sexo;
         var personal = buildRows([
-          ['Nome', fd.nome], ['Nome Social', fd.nomeSocial],
-          ['Sexo', fd.sexo], ['Nascimento', fd.nascimento],
+          ['Nome', fd.nome || fd.NOME], ['Nome Social', fd.nomeSocial],
+          ['Sexo', sx], ['Nascimento', fd.nascimento || fd.DATA_NASCIMENTO],
           ['Nacionalidade', fd.nacionalidade], ['Escolaridade', fd.escolaridade],
-          ['Estado Civil', fd.estadoCivil], ['Nome da Mãe', fd.nomeMae],
+          ['Estado Civil', fd.estadoCivil || fd.ESTADO_CIVIL], ['Nome da Mãe', fd.nomeMae],
+          ['Tipo de ensino médio', fd.TIPO_ENSINO_MEDIO], ['Estado do ensino médio', fd.UF_ENSINO_MEDIO],
+          ['Ano do ensino médio', fd.ANO_ENSINO_MEDIO],
         ]);
         var address = buildRows([
-          ['CEP', fd.cep], ['Endereço', fd.endereco], ['Número', fd.numero],
-          ['Complemento', fd.complemento], ['Bairro', fd.bairro],
-          ['Cidade', fd.cidade], ['UF', fd.uf],
+          ['CEP', fd.cep || fd.CEP], ['Endereço', fd.endereco || fd.LOGRADOURO], ['Número', fd.numero || fd.NUMERO],
+          ['Complemento', fd.complemento || fd.COMPLEMENTO], ['Bairro', fd.bairro || fd.BAIRRO],
+          ['Cidade', fd.cidade || fd.CIDADE], ['UF', fd.uf || fd.UF],
         ]);
+        var tel1 = fd.tel1 || fd.CELULAR || '';
         var contact = buildRows([
-          ['Telefone 1', fd.tel1 + (fd.tel1Tipo ? ' (' + fd.tel1Tipo + ')' : '')],
+          ['Telefone 1', tel1 + (fd.tel1Tipo ? ' (' + fd.tel1Tipo + ')' : '')],
           ['Telefone 2', fd.tel2 ? (fd.tel2 + (fd.tel2Tipo ? ' (' + fd.tel2Tipo + ')' : '')) : '—'],
-          ['E-mail', fd.email], ['PCD', fd.pcd],
+          ['E-mail', fd.email || fd.EMAIL], ['PCD', fd.pcd],
         ]);
         var docs = buildRows([
-          ['RG', fd.rg], ['Data RG', fd.rgData],
+          ['Documento', fd.DOC_TIPO || fd.rg], ['Data RG', fd.rgData],
           ['Órgão', fd.rgOrgao], ['UF', fd.rgUF],
-          ['CPF', fmtCPF(fd.cpf || doc.cpf)],
+          ['CPF', fmtCPF(fd.cpf || fd.CPF || doc.cpf)],
         ]);
         /* === Documento de Identificação anexado (Frente + Verso) === */
         var docFrenteHtml = renderDocCard(fd, 'frente');

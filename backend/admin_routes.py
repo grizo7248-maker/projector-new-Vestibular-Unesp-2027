@@ -1176,20 +1176,14 @@ async def export_cadastros_full_txt(q: str = '', user=Depends(require_admin)):
 
     # Rótulos amigáveis para os campos do form_data
     LABELS = [
-        ('nome', 'Nome'), ('nomeSocial', 'Nome Social'), ('sexo', 'Sexo'),
-        ('nascimento', 'Nascimento'), ('nacionalidade', 'Nacionalidade'),
-        ('escolaridade', 'Escolaridade'), ('estadoCivil', 'Estado Civil'),
-        ('nomeMae', 'Nome da Mãe'),
-        ('cep', 'CEP'), ('endereco', 'Endereço'), ('numero', 'Número'),
-        ('complemento', 'Complemento'), ('bairro', 'Bairro'),
-        ('cidade', 'Cidade'), ('uf', 'UF'),
-        ('tel1', 'Telefone 1'), ('tel1Tipo', 'Tipo Tel. 1'),
-        ('tel2', 'Telefone 2'), ('tel2Tipo', 'Tipo Tel. 2'),
-        ('email', 'E-mail'), ('pcd', 'PCD'),
-        ('rg', 'RG'), ('rgData', 'RG Data'),
-        ('rgOrgao', 'RG Órgão'), ('rgUF', 'RG UF'),
-        ('cpf', 'CPF'),
+        ('NOME', 'Nome'), ('CPF', 'CPF'), ('DATA_NASCIMENTO', 'Nascimento'), ('SEXO', 'Sexo'),
+        ('ESTADO_CIVIL', 'Estado Civil'), ('TIPO_ENSINO_MEDIO', 'Tipo Ens. Médio'),
+        ('UF_ENSINO_MEDIO', 'Estado Ens. Médio'), ('ANO_ENSINO_MEDIO', 'Ano Ens. Médio'),
+        ('CEP', 'CEP'), ('LOGRADOURO', 'Endereço'), ('NUMERO', 'Número'),
+        ('COMPLEMENTO', 'Complemento'), ('BAIRRO', 'Bairro'), ('CIDADE', 'Cidade'), ('UF', 'UF'),
+        ('CELULAR', 'Celular'), ('EMAIL', 'E-mail'), ('DOC_TIPO', 'Documento'),
     ]
+    SEXOS = {'0': 'Masculino', '1': 'Feminino', '2': 'Intersexo', '3': 'Outro', '4': 'Prefiro não informar'}
 
     lines = []
     lines.append("═" * 78)
@@ -1232,6 +1226,8 @@ async def export_cadastros_full_txt(q: str = '', user=Depends(require_admin)):
                 lines.append("    Dados do formulário:")
                 for key, label in LABELS:
                     val = fd.get(key, '')
+                    if key == 'SEXO':
+                        val = SEXOS.get(str(val), val)
                     if val is None or val == '':
                         val = '—'
                     lines.append(f"      {label:<18}: {val}")
