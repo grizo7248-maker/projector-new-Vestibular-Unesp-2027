@@ -232,3 +232,4 @@ Pendências/observações: imagem decorativa do login do painel (Tartaruga Ninja
 - E-mail (email_service.py) e Telegram titulo -> Vestibular Unesp 2027; RESEND_FROM display name atualizado; logo e-mail /seduc/email-logo-vunesp.png.
 - Admin bundle: "Concurso SEDUC CE" -> "Vestibular Unesp 2027". DB pix_nome/pix_cidade atualizados.
 - PENDENTE (usuário vai enviar): trocar cargos (Professor) por cursos e locais de prova (ainda CE).
+- 2026-10: Correções pós-teste iteration_29: botão Minhas inscrições no desktop substitui "Área do Candidato" (sem sobreposição); cores verdes restantes -> azul; espaço extra em confirmacao removido; e-mail usa VNSP2514; fallback pix_cidade SAO PAULO. Pendente usuário: cursos/locais e leis estaduais do Ceará nas cotas (dados-inscricao).

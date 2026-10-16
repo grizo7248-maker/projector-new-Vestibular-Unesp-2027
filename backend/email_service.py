@@ -242,7 +242,7 @@ def build_inscricao_email_html(*, nome: str, cpf: str, protocolo: str, cargo: st
     rows += _row("CPF:", cpf or "-")
     if cargo:
         rows += _row("Cargo:", cargo)
-    rows += _row("Concurso:", f"{CONCURSO_NOME} - Edital 014/2026")
+    rows += _row("Concurso:", f"{CONCURSO_NOME} - {EDITAL}")
     rows += _row("Valor da inscrição:", _fmt_valor(valor))
     primeiro = escape(nome.split()[0].capitalize()) if (nome or "").strip() else "candidato(a)"
     inner = (

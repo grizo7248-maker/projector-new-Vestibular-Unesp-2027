@@ -40,7 +40,7 @@ REPL = [
     ('/seduc/seduc-theme.js?v=5', '/seduc/seduc-theme.js?v=10'),
     ('/seduc/seduc-theme.css?v=7', '/seduc/seduc-theme.css?v=10'),
     ('#008d3c', '#1172db'), ('#006b2d', '#0b4f9c'), ('#00a84a', '#1172db'), ('#0e2a1a', '#0a2540'),
-    ('#f4faf6', '#eef5fd'), ('#eaf6ee', '#e6f0fc'), ('#d9e6dd', '#d3e3f6'),
+    ('#008C00', '#1172db'), ('#0f6a10', '#0b4f9c'), ('#e8f5e9', '#eef5fd'), ('#f4faf6', '#eef5fd'), ('#1f3d2b', '#0b4f9c'), ('#2e7d32', '#1172db'), ('#eef6f0', '#eef5fd'), ('#d5e3da', '#d3e3f6'), ('#eaf6ee', '#e6f0fc'), ('#d9e6dd', '#d3e3f6'),
 ]
 PAGES = ['inscricao.html', 'dados-inscricao.html', 'confirmacao.html', 'inscricao-realizada.html', 'pagamento-pix.html', 'minhas-inscricoes.html']
 for p in PAGES:
@@ -48,14 +48,17 @@ for p in PAGES:
     t = re.sub(r'<footer id="aocp-footer" class="seduc-footer".*?</footer>', '', t, flags=re.S)
     for a, b in REPL:
         t = t.replace(a, b)
+    if p == 'confirmacao.html':
+        t = t.replace('</body>', '<style>html body #pgInformacoes{padding-top:0!important}html body #pgInformacoes .blocoPadrao{margin-top:0!important;padding-top:0!important}html body #pgInformacoes .dados{padding-top:0!important}html body #TopoInformacoes{margin-top:0!important}html body #TopoInformacoes>div{padding-top:0!important}</style></body>', 1)
     open(PUB + '/' + p, 'w', encoding='utf-8').write(t)
     left = re.findall(r'(?i)seduc(?!/)|ceará|\bcev\b|uece|professor', re.sub(r'data:[^"\')\s]{100,}', '', t[t.find('<body'):]))
     print(p, 'restante:', len(left), set(x.lower() for x in left))
 
 # ---------- tema (css/js) ----------
 c = open(BK + '/seduc-theme.css', encoding='utf-8').read()
-for a, b in REPL[-7:]:
-    c = c.replace(a, b)
+for a, b in REPL:
+    if a.startswith('#'):
+        c = c.replace(a, b)
 c = c.replace('#008442', '#1172db')
 open(PUB + '/seduc/seduc-theme.css', 'w', encoding='utf-8').write(c)
 open(PUB + '/seduc/seduc-theme.js', 'w', encoding='utf-8').write(open('/app/memory/home_build/chrome_loader.js', encoding='utf-8').read())

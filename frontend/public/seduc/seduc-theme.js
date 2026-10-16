@@ -7,7 +7,7 @@ var BASE=':host{all:initial;display:block;font-family:"Open Sans",Helvetica,Aria
 '.vn-minhas{display:inline-flex;align-items:center;gap:7px;background:#1172db;color:#fff!important;text-decoration:none!important;font:700 12px "Open Sans",Arial,sans-serif;text-transform:uppercase;padding:10px 14px;border-radius:2px;white-space:nowrap}'+
 '.vn-minhas:hover{background:#0b4f9c}'+
 '.vn-minhas-box{position:absolute;right:15px;top:50%;transform:translateY(-50%);z-index:5}'+
-'@media(min-width:992px){.vn-minhas-box{right:auto;left:calc(50% + 370px)}}';
+'.vn-minhas-desk{padding:8px 12px!important;letter-spacing:0!important}@media(min-width:992px){.vn-minhas-box{display:none}}@media(max-width:991px){.vn-minhas-desk{display:none!important}}';
 function fontsLink(){
  if(document.getElementById('vn-fonts'))return;
  var l=document.createElement('link');l.id='vn-fonts';l.rel='stylesheet';l.href='/vunesp/fonts.css?v='+V;document.head.appendChild(l);
@@ -27,7 +27,7 @@ function build(parts){
  if(document.getElementById('seduc-header-host'))return;
  fontsLink();
  var hh=parts.h;
- if(MINHAS){hh=hh.replace('</header>','<div class="vn-minhas-box"><a class="vn-minhas" href="/minhas-inscricoes.html" data-testid="header-minhas-inscricoes-btn">Minhas inscrições</a></div></header>');}
+ if(MINHAS){hh=hh.replace('<a href=# title="Área do Candidato">Área do Candidato</a>','<a class="vn-minhas vn-minhas-desk" href="/minhas-inscricoes.html" data-testid="header-minhas-inscricoes-desktop-btn">Minhas inscrições</a>').replace('</header>','<div class="vn-minhas-box"><a class="vn-minhas" href="/minhas-inscricoes.html" data-testid="header-minhas-inscricoes-btn">Minhas inscrições</a></div></header>');}
  var r=host('seduc-header-host',hh,true,'header{position:relative}');
  document.querySelectorAll('#aocp-footer,.seduc-footer').forEach(function(el){el.remove();});
  host('vunesp-footer-host',parts.f,false,'#rodape{margin-top:40px}');
