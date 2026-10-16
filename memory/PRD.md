@@ -211,3 +211,11 @@ Pendências/observações: imagem decorativa do login do painel (Tartaruga Ninja
 - Domínio concursoamapa.online verificado no Resend (via Cloudflare auto-configure). email_service.send_email usa Resend direto quando RESEND_API_KEY+RESEND_FROM definidos (senão fallback managed).
 - VPS deve ter: RESEND_API_KEY, RESEND_FROM="Concurso SESA/AP <contato@concursoamapa.online>", APP_PUBLIC_URL=https://concursoamapa.online.
 - Decisão do usuário: manter APENAS 1 e-mail (Inscrição realizada, com botão "Pagar inscrição" -> deep-link pagamento-pix). REMOVIDO o 2º e-mail (PIX) do /pix/generate e o import de build_pix_email_html. build_pix_email_html permanece no email_service mas não é mais chamado.
+
+## Change log — 2026-10 (Nova página inicial modelo VUNESP)
+- inicio.html substituída pelo HTML enviado (Vestibular Unesp 2027 / VUNESP). Backup: public/inicio.html.seducbak.
+- Todos os links externos removidos (href=#), canonical/iframes/scripts externos removidos, busca desativada.
+- Botão INSCREVA-SE (#btn-inscreva-se) -> overlay "Carregando..." 2s -> /termos.html.
+- Rastreamento /api/track/access (relativo) mantido -> acessos aparecem no painel /donaspainel.
+- Ajustes mobile (Android/iOS): viewport-fit=cover, safe-area, botão 100%, fita sem overflow, widgets Rybena ocultos no mobile.
+- Script de build reproduzível: /app/memory/home_build/build_home.py (+ home_extra.html).

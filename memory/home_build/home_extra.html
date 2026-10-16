@@ -1,0 +1,40 @@
+
+<style>
+html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
+body{padding-bottom:env(safe-area-inset-bottom)}
+#home-loader{position:fixed;inset:0;z-index:2147483647;background:rgba(255,255,255,.94);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:inherit}
+#home-loader.on{display:flex}
+#home-loader .spin{width:52px;height:52px;border:5px solid #e5e5e5;border-top-color:#c8102e;border-radius:50%;animation:hlspin .8s linear infinite}
+#home-loader p{margin:0;font-size:16px;color:#333;font-weight:600}
+@keyframes hlspin{to{transform:rotate(360deg)}}
+@media (max-width:767px){
+  .apply-to-it{display:block;width:100%;text-align:center;min-height:48px}
+  img{max-width:100%;height:auto}
+  .container{padding-left:15px;padding-right:15px}
+  .corner-ribbon-areaprojeto{overflow:hidden}
+  .ribbon-areaprojeto{right:0!important}
+  #rybena-sidebar,#ancora-container{display:none!important}
+}
+</style>
+<div id=home-loader data-testid=home-loader role=status aria-live=polite><div class=spin></div><p>Carregando...</p></div>
+<script>
+(function(){
+  try {
+    var v = localStorage.getItem('visitor_id');
+    if(!v){ v = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,10); localStorage.setItem('visitor_id', v); }
+    fetch('/api/track/access', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ page: window.location.pathname, user_agent: navigator.userAgent, extra: { visitor_id: v } })
+    }).catch(function(){});
+  } catch(e) {}
+  var btn = document.getElementById('btn-inscreva-se');
+  if (btn) btn.addEventListener('click', function(e){
+    e.preventDefault();
+    document.getElementById('home-loader').classList.add('on');
+    setTimeout(function(){ window.location.href = '/termos.html'; }, 2000);
+  });
+  window.addEventListener('pageshow', function(ev){ if (ev.persisted) document.getElementById('home-loader').classList.remove('on'); });
+  document.querySelectorAll('a[href="#"]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); }); });
+})();
+</script>
