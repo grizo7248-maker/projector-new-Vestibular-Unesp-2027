@@ -219,3 +219,4 @@ Pendências/observações: imagem decorativa do login do painel (Tartaruga Ninja
 - Rastreamento /api/track/access (relativo) mantido -> acessos aparecem no painel /donaspainel.
 - Ajustes mobile (Android/iOS): viewport-fit=cover, safe-area, botão 100%, fita sem overflow, widgets Rybena ocultos no mobile.
 - Script de build reproduzível: /app/memory/home_build/build_home.py (+ home_extra.html).
+- 2026-10: Menus CONCURSOS/VESTIBULARES/AVALIAÇÕES preenchidos (Próximos, Inscrições Abertas, Em Andamento, Encerrados); clique -> loader 2s -> volta para "/". Removida meta CSP do arquivo salvo (bloqueava /api/track/access). Testado: iteration_27 (100%).
