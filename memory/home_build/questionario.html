@@ -1,0 +1,40 @@
+<fieldset class="vn-quest" data-testid="questionario-fieldset">
+<style>
+.vn-quest .vq-group{border:0;margin:0 0 22px;padding:0}
+.vn-quest .vq-title{display:block;font-size:15px;font-weight:600;color:#333;margin:0 0 12px}
+.vn-quest .vq-title .error{color:#e00}
+.vn-quest .vq-opt{display:flex!important;align-items:center;gap:10px;margin:0 0 10px!important;font-size:14px;font-weight:400!important;color:#555;cursor:pointer;line-height:1.4;width:auto!important;float:none!important}
+.vn-quest .vq-opt input[type=radio]{width:18px!important;height:18px!important;min-height:0!important;margin:0!important;padding:0!important;flex-shrink:0;accent-color:#1172db;box-shadow:none!important;border:0!important}
+.vn-quest .vq-err{display:none;color:#e00;font-size:12px;margin-top:4px}
+.vn-quest .vq-group.vq-invalid .vq-err{display:block}
+</style>
+<div class="vq-group" data-testid="vq-estado-civil"><span class="vq-title"><span class="error">*</span> Qual é seu estado civil legal?</span>
+<label class="vq-opt"><input type="radio" name="ESTADO_CIVIL" value="Solteiro" required data-testid="radio-estado-civil-solteiro"> Solteiro.</label>
+<label class="vq-opt"><input type="radio" name="ESTADO_CIVIL" value="Casado" data-testid="radio-estado-civil-casado"> Casado.</label>
+<label class="vq-opt"><input type="radio" name="ESTADO_CIVIL" value="Separado ou divorciado" data-testid="radio-estado-civil-separado"> Separado ou divorciado.</label>
+<label class="vq-opt"><input type="radio" name="ESTADO_CIVIL" value="Viúvo" data-testid="radio-estado-civil-viuvo"> Viúvo.</label>
+<div class="vq-err">Selecione uma opção.</div></div>
+<div class="vq-group" data-testid="vq-tipo-ensino-medio"><span class="vq-title"><span class="error">*</span> Que tipo de curso de ensino médio você concluiu ou concluirá?</span>
+<label class="vq-opt"><input type="radio" name="TIPO_ENSINO_MEDIO" value="Ensino médio comum" required data-testid="radio-tipo-em-comum"> Ensino médio comum.</label>
+<label class="vq-opt"><input type="radio" name="TIPO_ENSINO_MEDIO" value="Ensino profissionalizante" data-testid="radio-tipo-em-profissionalizante"> Ensino profissionalizante.</label>
+<label class="vq-opt"><input type="radio" name="TIPO_ENSINO_MEDIO" value="Magistério" data-testid="radio-tipo-em-magisterio"> Magistério.</label>
+<label class="vq-opt"><input type="radio" name="TIPO_ENSINO_MEDIO" value="Educação de jovens e adultos (EJA)" data-testid="radio-tipo-em-eja"> Educação de jovens e adultos (EJA).</label>
+<label class="vq-opt"><input type="radio" name="TIPO_ENSINO_MEDIO" value="Outro" data-testid="radio-tipo-em-outro"> Outro.</label>
+<div class="vq-err">Selecione uma opção.</div></div>
+<div class="vq-group" data-testid="vq-uf-ensino-medio"><span class="vq-title"><span class="error">*</span> Em que estado você concluiu ou concluirá o ensino médio?</span>
+<label class="vq-opt"><input type="radio" name="UF_ENSINO_MEDIO" value="São Paulo" required data-testid="radio-uf-em-sp"> São Paulo.</label>
+<label class="vq-opt"><input type="radio" name="UF_ENSINO_MEDIO" value="Minas Gerais" data-testid="radio-uf-em-mg"> Minas Gerais.</label>
+<label class="vq-opt"><input type="radio" name="UF_ENSINO_MEDIO" value="Paraná" data-testid="radio-uf-em-pr"> Paraná.</label>
+<label class="vq-opt"><input type="radio" name="UF_ENSINO_MEDIO" value="Rio de Janeiro" data-testid="radio-uf-em-rj"> Rio de Janeiro.</label>
+<label class="vq-opt"><input type="radio" name="UF_ENSINO_MEDIO" value="Mato Grosso do Sul, Mato Grosso, Goiás, Distrito Federal" data-testid="radio-uf-em-centro-oeste"> Mato Grosso do Sul, Mato Grosso, Goiás, Distrito Federal.</label>
+<label class="vq-opt"><input type="radio" name="UF_ENSINO_MEDIO" value="Demais estados ou outros países" data-testid="radio-uf-em-demais"> Demais estados ou outros países.</label>
+<div class="vq-err">Selecione uma opção.</div></div>
+<div class="vq-group" data-testid="vq-ano-ensino-medio"><span class="vq-title"><span class="error">*</span> Em que ano você concluiu ou concluirá o ensino médio?</span>
+<label class="vq-opt"><input type="radio" name="ANO_ENSINO_MEDIO" value="2022 ou antes" required data-testid="radio-ano-em-2022"> 2022 ou antes</label>
+<label class="vq-opt"><input type="radio" name="ANO_ENSINO_MEDIO" value="2023" data-testid="radio-ano-em-2023"> 2023</label>
+<label class="vq-opt"><input type="radio" name="ANO_ENSINO_MEDIO" value="2024" data-testid="radio-ano-em-2024"> 2024</label>
+<label class="vq-opt"><input type="radio" name="ANO_ENSINO_MEDIO" value="2025" data-testid="radio-ano-em-2025"> 2025</label>
+<label class="vq-opt"><input type="radio" name="ANO_ENSINO_MEDIO" value="2026" data-testid="radio-ano-em-2026"> 2026</label>
+<label class="vq-opt"><input type="radio" name="ANO_ENSINO_MEDIO" value="2027 ou após" data-testid="radio-ano-em-2027"> 2027 ou após</label>
+<div class="vq-err">Selecione uma opção.</div></div>
+</fieldset>

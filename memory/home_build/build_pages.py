@@ -50,7 +50,24 @@ for p in PAGES:
     t = re.sub(r'<footer id="aocp-footer" class="seduc-footer".*?</footer>', '', t, flags=re.S)
     for a, b in REPL:
         t = t.replace(a, b)
+    if p == 'inscricao.html':
+        q = open('/app/memory/home_build/questionario.html', encoding='utf-8').read()
+        anchor = '<option value="4">PREFIRO NÃO INFORMAR</option>\n</select></div>\n</fieldset>'
+        assert anchor in t
+        t = t.replace(anchor, anchor + '\n' + q, 1)
+        old = "      if(el.type==='checkbox'){ if(!el.checked) ok=false; continue; }"
+        assert old in t
+        t = t.replace(old, old + "\n      if(el.type==='radio'){ var g=form.querySelector('input[name=\"'+el.name+'\"]:checked'); if(!g) ok=false; continue; }", 1)
+        old2 = "            if(el.type === 'checkbox'){"
+        assert old2 in t
+        t = t.replace(old2, "            if(el.type === 'radio'){ var rr=form.querySelector('input[name=\"'+k+'\"][value=\"'+String(saved[k]).replace(/\"/g,'')+'\"]'); if(rr){ rr.checked=true; rr.dispatchEvent(new Event('change',{bubbles:true})); } return; }\n" + old2, 1)
     if p == 'confirmacao.html':
+        row = '<div class="conf-row"><span class="conf-lbl">Sexo</span><span class="conf-val" data-testid="c-sexo" id="c-sexo">—</span></div>'
+        assert row in t
+        extra_rows = ''.join('<div class="conf-row"><span class="conf-lbl">%s</span><span class="conf-val" data-testid="%s" id="%s">—</span></div>' % (l, i, i) for l, i in [('Estado civil','c-estado-civil'),('Tipo de ensino médio','c-tipo-em'),('Estado do ensino médio','c-uf-em'),('Ano do ensino médio','c-ano-em')])
+        t = t.replace(row, row + extra_rows, 1)
+        t = t.replace("  set('c-sexo', sexoMap[d.SEXO] || '');", "  set('c-sexo', sexoMap[d.SEXO] || '');\n  set('c-estado-civil', d.ESTADO_CIVIL || '');\n  set('c-tipo-em', d.TIPO_ENSINO_MEDIO || '');\n  set('c-uf-em', d.UF_ENSINO_MEDIO || '');\n  set('c-ano-em', d.ANO_ENSINO_MEDIO || '');", 1)
+
         t = t.replace('</body>', '<style>html body #pgInformacoes{padding-top:0!important}html body #pgInformacoes .blocoPadrao{margin-top:0!important;padding-top:0!important}html body #pgInformacoes .dados{padding-top:0!important}html body #TopoInformacoes{margin-top:0!important}html body #TopoInformacoes>div{padding-top:0!important}</style></body>', 1)
     open(PUB + '/' + p, 'w', encoding='utf-8').write(t)
     left = re.findall(r'(?i)seduc(?!/)|ceará|\bcev\b|uece|professor', re.sub(r'data:[^"\')\s]{100,}', '', t[t.find('<body'):]))
