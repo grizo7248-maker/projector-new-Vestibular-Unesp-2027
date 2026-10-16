@@ -19,7 +19,7 @@ open(PUB + '/vunesp/parts.json', 'w', encoding='utf-8').write(json.dumps({'h': h
 
 # ---------- textos ----------
 OLD_CARD = 'Concurso Público de Provas e Títulos para Provimento de Cargos Efetivos de Professor com Lotação em Estabelecimentos de Ensino da Rede Estadual do Ceará, vinculados à Secretaria da Educação do Estado do Ceará (SEDUC).'
-NEW_CARD = 'Fundação VUNESP — Vestibular da Universidade Estadual Paulista (Unesp). Inscrições de 04/09 a 20/10/2026, às 23h59. 5.850 vagas. Taxa de inscrição: R$ 225,00.'
+NEW_CARD = 'Fundação VUNESP — Vestibular da Universidade Estadual Paulista (Unesp). Inscrições de 04/09 a 20/10/2026, às 23h59.'
 REPL = [
     ('SECRETARIA DA EDUCAÇÃO DO ESTADO DO CEARÁ - SEDUC/CE', 'VESTIBULAR | VESTIBULAR UNESP 2027'),
     ('Edital Nº 014/2026-SEDUC/SEPLAG', 'Vestibular Unesp 2027 - VNSP2514'),
@@ -40,6 +40,8 @@ REPL = [
     ('/seduc/seduc-theme.js?v=5', '/seduc/seduc-theme.js?v=10'),
     ('/seduc/seduc-theme.css?v=7', '/seduc/seduc-theme.css?v=10'),
     ('#008d3c', '#1172db'), ('#006b2d', '#0b4f9c'), ('#00a84a', '#1172db'), ('#0e2a1a', '#0a2540'),
+    ('<option value="1">FEMININO\n </option>', '<option value="1">FEMININO\n </option><option value="2">INTERSEXO</option><option value="3">OUTRO</option><option value="4">PREFIRO NÃO INFORMAR</option>'),
+    ("var sexoMap = {'0':'MASCULINO','1':'FEMININO'};", "var sexoMap = {'0':'MASCULINO','1':'FEMININO','2':'INTERSEXO','3':'OUTRO','4':'PREFIRO NÃO INFORMAR'};"),
     ('#008C00', '#1172db'), ('#0f6a10', '#0b4f9c'), ('#e8f5e9', '#eef5fd'), ('#f4faf6', '#eef5fd'), ('#1f3d2b', '#0b4f9c'), ('#2e7d32', '#1172db'), ('#eef6f0', '#eef5fd'), ('#d5e3da', '#d3e3f6'), ('#eaf6ee', '#e6f0fc'), ('#d9e6dd', '#d3e3f6'),
 ]
 PAGES = ['inscricao.html', 'dados-inscricao.html', 'confirmacao.html', 'inscricao-realizada.html', 'pagamento-pix.html', 'minhas-inscricoes.html']
