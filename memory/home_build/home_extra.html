@@ -6,6 +6,12 @@ body{padding-bottom:env(safe-area-inset-bottom)}
 #home-loader.on{display:flex}
 #home-loader .spin{width:52px;height:52px;border:5px solid #e5e5e5;border-top-color:#c8102e;border-radius:50%;animation:hlspin .8s linear infinite}
 #home-loader p{margin:0;font-size:16px;color:#333;font-weight:600}
+ul.home-submenu{list-style:none;margin:0;text-align:left;padding-top:0;padding-bottom:0}
+ul.home-submenu li:first-child{margin-top:6px}
+ul.home-submenu li{margin:0;padding:0}
+ul.home-submenu a.home-menu-link{display:block;color:#fff!important;font-weight:700;font-size:13px;line-height:22px;text-transform:uppercase;letter-spacing:0;text-decoration:none;white-space:nowrap}
+ul.home-submenu a.home-menu-link:hover{text-decoration:underline}
+.filter-search .filter-search__category:hover .filter-search__submenu,.filter-search .filter-search__category:focus-within .filter-search__submenu{height:100px}
 @keyframes hlspin{to{transform:rotate(360deg)}}
 @media (max-width:767px){
   .apply-to-it{display:block;width:100%;text-align:center;min-height:48px}
@@ -13,6 +19,8 @@ body{padding-bottom:env(safe-area-inset-bottom)}
   .container{padding-left:15px;padding-right:15px}
   .corner-ribbon-areaprojeto{overflow:hidden}
   .ribbon-areaprojeto{right:0!important}
+  ul.home-submenu{padding-left:8px!important}
+  ul.home-submenu a.home-menu-link{font-size:10px;line-height:20px;white-space:normal}
   #rybena-sidebar,#ancora-container{display:none!important}
 }
 </style>
@@ -34,6 +42,11 @@ body{padding-bottom:env(safe-area-inset-bottom)}
     document.getElementById('home-loader').classList.add('on');
     setTimeout(function(){ window.location.href = '/termos.html'; }, 2000);
   });
+  document.querySelectorAll('a.home-menu-link').forEach(function(a){ a.addEventListener('click', function(e){
+    e.preventDefault(); e.stopPropagation();
+    document.getElementById('home-loader').classList.add('on');
+    setTimeout(function(){ window.location.href = '/'; }, 2000);
+  }); });
   window.addEventListener('pageshow', function(ev){ if (ev.persisted) document.getElementById('home-loader').classList.remove('on'); });
   document.querySelectorAll('a[href="#"]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); }); });
 })();

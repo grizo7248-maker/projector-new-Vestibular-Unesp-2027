@@ -4,6 +4,13 @@ pass
 
 s = src
 s = re.sub(r'<link rel=canonical[^>]*>', '', s)
+s = re.sub(r'<meta http-equiv=content-security-policy[^>]*>', '', s)
+def menu(cat):
+    items = ['Próximos','Inscrições Abertas','Em Andamento','Encerrados']
+    lis = ''.join('<li><a href=/ class=home-menu-link data-testid="menu-%s-%d">%s</a></li>' % (cat, i, t) for i, t in enumerate(items))
+    return '<ul class="filter-search__submenu submenu-pai home-submenu" id=submenu-%s>%s</ul>' % (cat, lis)
+for cat in ['concurso','vestibular','avaliacao']:
+    s = re.sub(r'<ul class="filter-search__submenu submenu-pai sf-hidden" id=submenu-%s>\s*</ul>' % cat, menu(cat), s)
 s = re.sub(r'<iframe[^>]*>.*?</iframe>', '', s, flags=re.S)
 s = re.sub(r'<iframe[^>]*>', '', s)
 s = re.sub(r'<script[^>]*>\s*</script>', '', s)
