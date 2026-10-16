@@ -124,63 +124,9 @@
  </section>
 </header>
  <noscript></noscript>
- <div class="container clearfix">
- 
- 
-<div class=row>
- <label id=lblBusca for=ancora-busca>Busque por categoria, cargo, cidade ou o termo de sua preferência</label>
- <div class=search-course>
- 
- <div id=search-box>
- <form action=# method=GET class=form-search onsubmit="return false">
- <div id=input-group class=input-group-pesquisa>
- <span class=input-icon><i class="fas fa-search"></i></span>
- <input id=ancora-busca name=b type=text class=form-input-search placeholder="Digite aqui a sua busca" autocomplete=off value>
- <span id=input-group-btn>
- <button type=submit class="btn btn-danger form-submit" aria-label="Clique para pesquisar">
- <span class="far fa-chevron-right" aria-hidden=true></span>
- </button>
- </span>
- </div>
- </form>
- <div class="search-results hidden-xs clearfix sf-hidden">
- 
- </div>
- </div>
- <div class=filter-search>
- <div class="filter-search__label box-top-right-diagonal">
- <h2 class=sub-titulo-principal>Selecione uma das categorias</h2>
- </div>
- <div class="filter-search__category concurso box-top-right-diagonal box-bottom-left-diagonal menu-principal">
- <button id=ancora-concurso aria-expanded=true aria-controls=submenu-concurso type=button><span>Concursos</span></button>
- <ul class="filter-search__submenu submenu-pai home-submenu" id=submenu-concurso><li><a href=/ class=home-menu-link data-testid="menu-concurso-0">Próximos</a></li><li><a href=/ class=home-menu-link data-testid="menu-concurso-1">Inscrições Abertas</a></li><li><a href=/ class=home-menu-link data-testid="menu-concurso-2">Em Andamento</a></li><li><a href=/ class=home-menu-link data-testid="menu-concurso-3">Encerrados</a></li></ul>
- </div>
- <div class="filter-search__category vestibular box-top-right-diagonal box-bottom-left-diagonal menu-principal">
- <button id=ancora-vestibular aria-expanded=true aria-controls=submenu-vestibular type=button><span>Vestibulares</span></button>
- <ul class="filter-search__submenu submenu-pai home-submenu" id=submenu-vestibular><li><a href=/ class=home-menu-link data-testid="menu-vestibular-0">Próximos</a></li><li><a href=/ class=home-menu-link data-testid="menu-vestibular-1">Inscrições Abertas</a></li><li><a href=/ class=home-menu-link data-testid="menu-vestibular-2">Em Andamento</a></li><li><a href=/ class=home-menu-link data-testid="menu-vestibular-3">Encerrados</a></li></ul>
- </div>
- <div class="filter-search__category avaliacao box-bottom-left-diagonal menu-principal">
- <button id=ancora-avaliacao aria-expanded=true aria-controls=submenu-avaliacao type=button><span>Avaliações</span></button>
- <ul class="filter-search__submenu submenu-pai home-submenu" id=submenu-avaliacao><li><a href=/ class=home-menu-link data-testid="menu-avaliacao-0">Próximos</a></li><li><a href=/ class=home-menu-link data-testid="menu-avaliacao-1">Inscrições Abertas</a></li><li><a href=/ class=home-menu-link data-testid="menu-avaliacao-2">Em Andamento</a></li><li><a href=/ class=home-menu-link data-testid="menu-avaliacao-3">Encerrados</a></li></ul>
- </div>
- </div>
- </div>
-</div>
- </div>
  <section id=conteudoPrincipal>
  <div class=mainContainer>
-<div class=container>
- <section class=row>
- <div class="col-xs-12 col-sm-12">
- <div class=breadcumb aria-label=Breadcrumb>
- <a href=/ class="breadcumb-link home-menu-link-plain" title="Voltar para a página inicial">Home</a>
- <a href=/ class="breadcumb-link home-menu-link-plain">Vestibular</a>
- <a href=/ class="breadcumb-link home-menu-link-plain">Vestibular Unesp 2027</a>
- <strong class=breadcumb-end-trail>Termos de Inscrição</strong>
- </div>
- </div>
- </section>
-</div>
+<div class=termos-topo></div>
 <div class="container course-container">
  <section class="row vestibular corner-ribbon-areaprojeto">
  <span class="ribbon ribbon-areaprojeto"><span>VNSP2514</span></span>
@@ -207,6 +153,7 @@
  </div>
  </section>
 <style>
+.termos-topo{height:30px}
 .termos-desc p{font-size:12px;line-height:20px}
 .termos-aceite{display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:12px;line-height:20px;font-weight:400;color:#333;padding:16px 18px;background:#f5f5f5;border-left:4px solid #1172db;margin:18px 0 0;max-width:900px}
 .termos-aceite input{width:18px;height:18px;margin:1px 0 0;flex-shrink:0;accent-color:#1172db}

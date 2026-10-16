@@ -41,6 +41,8 @@ a = t.find('<section id=conteudoPrincipal>')
 b = t.find('<footer id=rodape>')
 end = t.rfind('</div>', a, b)
 t = t[:a] + open('/app/memory/home_build/termos_main.html', encoding='utf-8').read() + '\n ' + t[end:]
+n0 = t.find('<noscript></noscript>')
+t = t[:n0] + '<noscript></noscript>\n ' + t[t.find('<section id=conteudoPrincipal>'):]
 t = t.replace('<title>Vestibular Unesp 2027 | Universidade Estadual Paulista - UNESP</title>', '<title>Termos de Inscrição | Vestibular Unesp 2027</title>')
 open('/app/frontend/public/termos.html', 'w', encoding='utf-8').write(t)
 print('termos ok', len(t))
