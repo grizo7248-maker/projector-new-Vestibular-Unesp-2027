@@ -37,7 +37,7 @@ REPL = [
     ('Secretaria da Educação do Estado do Ceará (SEDUC/CE)', 'Universidade Estadual Paulista (Unesp) - VNSP2514'),
     ('Cebraspe - Concursos e Seleções com Integridade', 'Fundação VUNESP'),
     ('sac@cebraspe.org.br', 'atendimento@vunesp.com.br'),
-    ('/seduc/seduc-theme.js?v=5', '/seduc/seduc-theme.js?v=11'),
+    ('/seduc/seduc-theme.js?v=5', '/seduc/seduc-theme.js?v=12'),
     ('/seduc/seduc-theme.css?v=7', '/seduc/seduc-theme.css?v=10'),
     ('#008d3c', '#1172db'), ('#006b2d', '#0b4f9c'), ('#00a84a', '#1172db'), ('#0e2a1a', '#0a2540'),
     ('<option value="1">FEMININO\n </option>', '<option value="1">FEMININO\n </option><option value="2">INTERSEXO</option><option value="3">OUTRO</option><option value="4">PREFIRO NÃO INFORMAR</option>'),
@@ -88,7 +88,7 @@ for p in PAGES:
     t = t.replace('>Município da Prova<', '>Cidade de Aplicação<').replace('>Município da Prova:<', '>Cidade de Aplicação:<')
     t = t.replace('<h3 class="vn-keep">VESTIBULAR | VESTIBULAR UNESP 2027</h3>', '<h3 class="vn-keep">Vestibular Unesp 2027</h3><p class="vn-sub">Universidade Estadual Paulista - UNESP</p>')
     t = re.sub(r'(<div class="edhead">\s*<h3[^>]*>)VESTIBULAR \| VESTIBULAR UNESP 2027(</h3>)', r'\1Vestibular Unesp 2027\2<p class="vn-sub">Universidade Estadual Paulista - UNESP</p>', t)
-    t = t.replace('</body>', '<link rel="stylesheet" href="/vunesp/pages.css?v=4"></body>', 1)
+    t = t.replace('</head>', '<link rel="stylesheet" href="/vunesp/pages.css?v=5"><style>html.vn-wait body{opacity:0!important}html body{transition:opacity .15s ease}</style><script>document.documentElement.classList.add("vn-wait");setTimeout(function(){document.documentElement.classList.remove("vn-wait")},2500);</script></head>', 1)
     t = t.replace('>Vaga Escolhida:<', '>Curso Escolhido:<').replace('>Vaga Escolhida<', '>Curso Escolhido<')
     if p == 'inscricao-realizada.html':
         t = t.replace("var __v = (!isNaN(__c)) ? ((__c >= 13 && __c <= 15) ? 120 : 160)\n              : (__lbl.indexOf('ASSISTENTE') !== -1 ? 120 : (__lbl.indexOf('ESPECIALISTA') !== -1 ? 160 : null));", "var __v = 225;")

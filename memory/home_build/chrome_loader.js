@@ -1,5 +1,5 @@
 (function(){
-var V='11';
+var V='12';
 var P=location.pathname;
 var MINHAS=/\/(inscricao-realizada|pagamento-pix)(\.html)?\/?$/.test(P);
 var BASE=':host{all:initial;display:block;font-family:"Open Sans",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857;color:#333;text-align:left}'+
@@ -18,7 +18,7 @@ function host(id,html,atTop,extra){
  if(atTop)document.body.insertBefore(h,document.body.firstChild);else document.body.appendChild(h);
  var r=h.attachShadow({mode:'open'});
  r.innerHTML='<link rel="stylesheet" href="/vunesp/chrome.css?v='+V+'"><style>'+BASE+(extra||'')+'</style><div class="vn-wrap">'+html+'</div>';
- var ln=r.querySelector('link');ln.addEventListener('load',function(){h.style.visibility='visible';});
+ var ln=r.querySelector('link');ln.addEventListener('load',function(){h.style.visibility='visible';if(atTop)document.documentElement.classList.remove('vn-wait');});
  setTimeout(function(){h.style.visibility='visible';},2500);
  r.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a');if(!a)return;var hr=a.getAttribute('href');if(!hr||hr==='#'){e.preventDefault();}});
  return r;
@@ -33,7 +33,7 @@ function build(parts){
  host('vunesp-footer-host',parts.f,false,'#rodape{margin-top:40px}');
 }
 function go(){
- fetch('/vunesp/parts.json?v='+V).then(function(r){return r.json();}).then(build).catch(function(){});
+ fetch('/vunesp/parts.json?v='+V).then(function(r){return r.json();}).then(build).catch(function(){document.documentElement.classList.remove('vn-wait');});
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
 })();
