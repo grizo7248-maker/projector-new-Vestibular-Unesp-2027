@@ -19,7 +19,8 @@ function host(id,html,atTop,extra){
  var r=h.attachShadow({mode:'open'});
  r.innerHTML='<link rel="stylesheet" href="/vunesp/chrome.css?v='+V+'"><style>'+BASE+(extra||'')+'</style><div class="vn-wrap">'+html+'</div>';
  var ln=r.querySelector('link');ln.addEventListener('load',function(){h.style.visibility='visible';if(atTop)document.documentElement.classList.remove('vn-wait');});
- setTimeout(function(){h.style.visibility='visible';},2500);
+ ln.addEventListener('error',function(){h.remove();document.documentElement.classList.remove('vn-wait');});
+ setTimeout(function(){if(ln.sheet)h.style.visibility='visible';},2500);
  r.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a');if(!a)return;var hr=a.getAttribute('href');if(!hr||hr==='#'){e.preventDefault();}});
  return r;
 }
