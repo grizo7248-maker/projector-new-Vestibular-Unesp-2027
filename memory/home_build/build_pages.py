@@ -57,6 +57,7 @@ for p in PAGES:
     for a, b in REPL:
         t = t.replace(a, b)
     if p == 'dados-inscricao.html':
+        t = t.replace('</head>', '<style>@media(max-width:767px){html body:not(#vn_a):not(#vn_b) .Miolo{padding-left:8px!important;padding-right:8px!important}html body:not(#vn_a):not(#vn_b) .vn-x,html body:not(#vn_a):not(#vn_b) #pgInformacoes,html body:not(#vn_a):not(#vn_b) .blocoPadrao,html body:not(#vn_a):not(#vn_b) .blocoPadrao .dados{padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important}html body:not(#vn_a):not(#vn_b) .blocoPadrao fieldset{padding-left:12px!important;padding-right:12px!important;margin-left:0!important;margin-right:0!important}}</style></head>', 1)
         t = re.sub(r"  var CARGOS=\{\n    '1':\[.*?\]\]\n  \};", lambda m: "  var CARGOS={\n    '1':" + CURSOS_JS + "\n  };", t, count=1, flags=re.S)
         assert CURSOS_JS in t
         CID = ['AMERICANA','ARACATUBA','ARARAQUARA','ASSIS','BAURU','BOTUCATU','BRASILIA','CAMPINAS','CAMPO GRANDE','CURITIBA','DRACENA','FRANCA','GUARATINGUETA','GUARULHOS','ILHA SOLTEIRA','ITAPEVA','JABOTICABAL','JUNDIAI','MARILIA','OURINHOS','PIRACICABA','PRESIDENTE PRUDENTE','REGISTRO','RIBEIRAO PRETO','RIO CLARO','ROSANA','SANTO ANDRE','SAO JOAO DA BOA VISTA','SAO JOSE DO RIO PRETO','SAO JOSE DOS CAMPOS','SAO PAULO','SAO VICENTE','SOROCABA','TUPA','UBERLANDIA']
