@@ -61,6 +61,8 @@ for p in PAGES:
         t = t.replace('<label class="description">Vaga</label>', '<label class="description">Curso</label>', 1)
         t = t.replace('<label><span class="error">*</span> Cargo</label>\n<select class="select" data-testid="select-vaga"', '<label><span class="error">*</span> Curso</label>\n<select class="select" data-testid="select-vaga"', 1)
     t = t.replace('>Vaga Escolhida:<', '>Curso Escolhido:<').replace('>Vaga Escolhida<', '>Curso Escolhido<')
+    if p == 'inscricao-realizada.html':
+        t = t.replace("var __v = (!isNaN(__c)) ? ((__c >= 13 && __c <= 15) ? 120 : 160)\n              : (__lbl.indexOf('ASSISTENTE') !== -1 ? 120 : (__lbl.indexOf('ESPECIALISTA') !== -1 ? 160 : null));", "var __v = 225;")
     if p == 'minhas-inscricoes.html':
         t = t.replace('>Vaga<', '>Curso<')
     if p == 'inscricao.html':

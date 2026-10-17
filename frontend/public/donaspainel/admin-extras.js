@@ -269,8 +269,10 @@
       // Estratégia simplificada: para cada DIV/SPAN folha com texto contendo "@",
       // sobe até achar um ancestor com CPF formatado e VALOR, e substitui o email pelo cargo.
       var candidates = document.querySelectorAll('div, span, p, td');
+      var seen = {};
       candidates.forEach(function (el) {
         if (el.children.length) return;
+        if (el.closest && el.closest('#adm-details, .adm-d-back, [role="dialog"], .dp-modal, .dp-modal-body, .dp-detail-body')) return;
         if (el.classList && el.classList.contains('adm-vaga-inline')) return;
         var t = (el.textContent || '').trim();
         if (!t || t.indexOf('@') < 0 || t.length > 100) return;
@@ -286,12 +288,9 @@
             var cpfDigits = cpfMatch[0].replace(/\D/g, '');
             var inscs = byCpf[cpfDigits] || [];
             if (!inscs.length) return;
-            var ins = inscs[0];
-            if (inscs.length > 1) {
-              var rowVal = parseFloat(valMatch[1].replace(/\./g,'').replace(',','.'));
-              var found = inscs.find(function (x) { return Math.abs((x.valor || 0) - rowVal) < 0.5; });
-              if (found) ins = found;
-            }
+            var idx = seen[cpfDigits] || 0;
+            seen[cpfDigits] = idx + 1;
+            var ins = inscs[Math.min(idx, inscs.length - 1)];
             var cargo = (ins.cargo_titulo || ins.cargo_codigo || '').trim();
             if (cargo) {
               el.textContent = cargo;
@@ -644,7 +643,7 @@
       'Pix Key Used At': 1
     };
     /* Labels para RENOMEAR */
-    var renameLabels = { 'Pix Key Used': 'Chave pix usada' };
+    var renameLabels = { 'Pix Key Used': 'Chave pix usada', 'Cargo Titulo': 'Curso', 'Cargo Título': 'Curso' };
 
     var foundUsed = false;
     var processedCount = 0;
