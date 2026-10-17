@@ -1,7 +1,7 @@
 (function(){
-var V='12';
+var V='13';
 var P=location.pathname;
-var MINHAS=/\/(inscricao-realizada|pagamento-pix)(\.html)?\/?$/.test(P);
+var MINHAS=/\/(inscricao-realizada|pagamento-pix|minhas-inscricoes)(\.html)?\/?$/.test(P);
 var BASE=':host{all:initial;display:block;font-family:"Open Sans",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857;color:#333;text-align:left}'+
 '.vn-wrap{font-size:14px}'+
 '.vn-minhas{display:inline-flex;align-items:center;gap:7px;background:#d9534f;color:#fff!important;text-decoration:none!important;font:700 12px "Open Sans",Arial,sans-serif;text-transform:uppercase;padding:10px 14px;border-radius:2px;white-space:nowrap}'+
@@ -29,7 +29,7 @@ function build(parts){
  fontsLink();
  var hh=parts.h;
  if(MINHAS){hh=hh.replace('<a href=# title="Área do Candidato">Área do Candidato</a>','<a class="vn-minhas vn-minhas-desk" href="/minhas-inscricoes.html" data-testid="header-minhas-inscricoes-desktop-btn">Minhas inscrições</a>').replace('</header>','<div class="vn-minhas-box"><a class="vn-minhas" href="/minhas-inscricoes.html" data-testid="header-minhas-inscricoes-btn">Minhas inscrições</a></div></header>');}
- var r=host('seduc-header-host',hh,true,'header{position:relative}');
+ var r=host('seduc-header-host',hh,true,'header{position:relative}'+(MINHAS?'.social,.socialmedia-item{display:none!important}':''));
  document.querySelectorAll('#aocp-footer,.seduc-footer').forEach(function(el){el.remove();});
  host('vunesp-footer-host',parts.f,false,'#rodape{margin-top:40px}');
 }
