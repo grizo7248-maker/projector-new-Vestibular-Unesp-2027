@@ -184,28 +184,28 @@ def _shell(inner: str, base: str = "") -> str:
     logo_url = f"{base}/seduc/email-logo-vunesp.png" if base else ""
     logo = (
         f'<img src="{escape(logo_url)}" width="135" alt="Fundação VUNESP" '
-        'style="display:block;margin:0 auto 16px;width:320px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none" />'
+        'style="display:block;margin:0 auto 16px;width:160px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none" />'
         if logo_url else ""
     )
     return (
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
-        'style="background:#eef3ef;padding:28px 0;font-family:Arial,Helvetica,sans-serif">'
+        'style="background:#f5f5f5;padding:28px 0;font-family:Arial,Helvetica,sans-serif">'
         '<tr><td align="center">'
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
-        'style="max-width:600px;width:100%;background:#ffffff;border:1px solid #d7e2da;border-radius:6px;overflow:hidden">'
-        '<tr><td style="height:6px;background:#1172db;font-size:0;line-height:0">&nbsp;</td></tr>'
-        '<tr><td align="center" style="padding:28px 28px 20px;border-bottom:3px solid #1172db;background:#ffffff">'
+        'style="max-width:600px;width:100%;background:#ffffff;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden">'
+        '<tr><td style="height:6px;background:#d9534f;font-size:0;line-height:0">&nbsp;</td></tr>'
+        '<tr><td align="center" style="padding:28px 28px 20px;border-bottom:1px solid #e5e5e5;background:#ffffff">'
         f'{logo}'
-        f'<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:18px;font-weight:bold;color:#1f2d24;line-height:1.4">{escape(CONCURSO_NOME)}</div>'
+        f'<div style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:normal;color:#333;line-height:1.4">{escape(CONCURSO_NOME)}</div>'
         f'<div style="font-size:12px;color:#5f6f64;margin-top:6px">{escape(EDITAL)}</div>'
         '</td></tr>'
         f'<tr><td style="padding:30px 32px">{inner}</td></tr>'
-        '<tr><td style="padding:18px 32px;border-top:1px solid #e7efe9;background:#f7faf8">'
+        '<tr><td style="padding:18px 32px;border-top:1px solid #eeeeee;background:#fafafa">'
         '<p style="margin:0;font-size:11px;color:#7d8b82;line-height:1.6">'
         f'Enviado por {escape(CONCURSO_NOME)}. Este é um e-mail automático de confirmação; não é necessário respondê-lo. '
         'Por segurança, nunca solicitamos senha, código ou dados de cartão por e-mail.'
         '</p></td></tr>'
-        '<tr><td style="height:6px;background:#ffbd00;font-size:0;line-height:0">&nbsp;</td></tr>'
+        '<tr><td style="height:6px;background:#555555;font-size:0;line-height:0">&nbsp;</td></tr>'
         '</table></td></tr></table>'
     )
 
@@ -215,7 +215,7 @@ def _button(label: str, href: str) -> str:
         return ""
     return (
         '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0 6px">'
-        f'<tr><td style="border-radius:6px;background:#1172db">'
+        f'<tr><td style="border-radius:4px;background:#d9534f">'
         f'<a href="{escape(href)}" style="display:inline-block;padding:14px 32px;font-size:15px;'
         'font-weight:bold;color:#ffffff;text-decoration:none;font-family:Arial,Helvetica,sans-serif">'
         f'{escape(label)}</a>'
@@ -242,7 +242,7 @@ def build_inscricao_email_html(*, nome: str, cpf: str, protocolo: str, cargo: st
     rows += _row("CPF:", cpf or "-")
     if cargo:
         rows += _row("Curso:", cargo)
-    rows += _row("Concurso:", f"{CONCURSO_NOME} - {EDITAL}")
+    rows += _row("Vestibular:", f"{CONCURSO_NOME} - {EDITAL}")
     rows += _row("Valor da inscrição:", _fmt_valor(valor))
     primeiro = escape(nome.split()[0].capitalize()) if (nome or "").strip() else "candidato(a)"
     inner = (
@@ -251,7 +251,7 @@ def build_inscricao_email_html(*, nome: str, cpf: str, protocolo: str, cargo: st
         'Sua <strong>inscrição foi realizada com sucesso</strong>. Veja o resumo abaixo:'
         '</p>'
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
-        'style="border:1px solid #dfe9e2;border-radius:8px;padding:8px 18px;background:#fbfdfc">'
+        'style="border:1px solid #e5e5e5;border-radius:6px;padding:8px 18px;background:#fafafa">'
         f'{rows}</table>'
         '<p style="margin:20px 0 0;font-size:14px;color:#2b3a30;line-height:1.6">'
         f'Sua inscrição está <strong>pendente</strong>, para confirmar, realize o pagamento da taxa até dia <strong>{escape(PRAZO)}</strong>.'
