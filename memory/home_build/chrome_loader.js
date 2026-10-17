@@ -1,11 +1,11 @@
 (function(){
-var V='10';
+var V='11';
 var P=location.pathname;
 var MINHAS=/\/(inscricao-realizada|pagamento-pix)(\.html)?\/?$/.test(P);
 var BASE=':host{all:initial;display:block;font-family:"Open Sans",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857;color:#333;text-align:left}'+
 '.vn-wrap{font-size:14px}'+
-'.vn-minhas{display:inline-flex;align-items:center;gap:7px;background:#1172db;color:#fff!important;text-decoration:none!important;font:700 12px "Open Sans",Arial,sans-serif;text-transform:uppercase;padding:10px 14px;border-radius:2px;white-space:nowrap}'+
-'.vn-minhas:hover{background:#0b4f9c}'+
+'.vn-minhas{display:inline-flex;align-items:center;gap:7px;background:#d9534f;color:#fff!important;text-decoration:none!important;font:700 12px "Open Sans",Arial,sans-serif;text-transform:uppercase;padding:10px 14px;border-radius:2px;white-space:nowrap}'+
+'.vn-minhas:hover{background:#c9302c}'+
 '.vn-minhas-box{position:absolute;right:15px;top:50%;transform:translateY(-50%);z-index:5}'+
 '.vn-minhas-desk{padding:8px 12px!important;letter-spacing:0!important}@media(min-width:992px){.vn-minhas-box{display:none}}@media(max-width:991px){.vn-minhas-desk{display:none!important}}';
 function fontsLink(){

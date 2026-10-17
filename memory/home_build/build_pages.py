@@ -37,7 +37,7 @@ REPL = [
     ('Secretaria da Educação do Estado do Ceará (SEDUC/CE)', 'Universidade Estadual Paulista (Unesp) - VNSP2514'),
     ('Cebraspe - Concursos e Seleções com Integridade', 'Fundação VUNESP'),
     ('sac@cebraspe.org.br', 'atendimento@vunesp.com.br'),
-    ('/seduc/seduc-theme.js?v=5', '/seduc/seduc-theme.js?v=10'),
+    ('/seduc/seduc-theme.js?v=5', '/seduc/seduc-theme.js?v=11'),
     ('/seduc/seduc-theme.css?v=7', '/seduc/seduc-theme.css?v=10'),
     ('#008d3c', '#1172db'), ('#006b2d', '#0b4f9c'), ('#00a84a', '#1172db'), ('#0e2a1a', '#0a2540'),
     ('<option value="1">FEMININO\n </option>', '<option value="1">FEMININO\n </option><option value="2">INTERSEXO</option><option value="3">OUTRO</option><option value="4">PREFIRO NÃO INFORMAR</option>'),
@@ -86,6 +86,9 @@ for p in PAGES:
     t = t.replace('</head>', '<style>html body .aocp-edital-card{width:auto!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}@media(max-width:767px){html body .vn-lgpd{text-align:left!important;padding:12px 14px!important;font-size:13px!important}}</style></head>', 1)
     t = t.replace("({'CE':'Ceará','AP':'Ceará','BA':'Ceará'}[d.UF_PROVA] || d.UF_PROVA || '')", "({'SP':'São Paulo','DF':'Distrito Federal','MS':'Mato Grosso do Sul','PR':'Paraná','MG':'Minas Gerais'}[d.UF_PROVA] || d.UF_PROVA || '')")
     t = t.replace('>Município da Prova<', '>Cidade de Aplicação<').replace('>Município da Prova:<', '>Cidade de Aplicação:<')
+    t = t.replace('<h3 class="vn-keep">VESTIBULAR | VESTIBULAR UNESP 2027</h3>', '<h3 class="vn-keep">Vestibular Unesp 2027</h3><p class="vn-sub">Universidade Estadual Paulista - UNESP</p>')
+    t = re.sub(r'(<div class="edhead">\s*<h3[^>]*>)VESTIBULAR \| VESTIBULAR UNESP 2027(</h3>)', r'\1Vestibular Unesp 2027\2<p class="vn-sub">Universidade Estadual Paulista - UNESP</p>', t)
+    t = t.replace('</body>', '<link rel="stylesheet" href="/vunesp/pages.css?v=3"></body>', 1)
     t = t.replace('>Vaga Escolhida:<', '>Curso Escolhido:<').replace('>Vaga Escolhida<', '>Curso Escolhido<')
     if p == 'inscricao-realizada.html':
         t = t.replace("var __v = (!isNaN(__c)) ? ((__c >= 13 && __c <= 15) ? 120 : 160)\n              : (__lbl.indexOf('ASSISTENTE') !== -1 ? 120 : (__lbl.indexOf('ESPECIALISTA') !== -1 ? 160 : null));", "var __v = 225;")
@@ -125,4 +128,5 @@ for a, b in REPL:
 c = c.replace('#008442', '#1172db')
 open(PUB + '/seduc/seduc-theme.css', 'w', encoding='utf-8').write(c)
 open(PUB + '/seduc/seduc-theme.js', 'w', encoding='utf-8').write(open('/app/memory/home_build/chrome_loader.js', encoding='utf-8').read())
+import shutil; shutil.copy('/app/memory/home_build/pages.css', PUB + '/vunesp/pages.css')
 print('ok')
