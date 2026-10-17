@@ -326,6 +326,7 @@
       if (el.children.length) return; // só folhas
       var t = (el.textContent || '').trim();
       if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(t)) return;
+      if (el.closest && el.closest('#adm-details, .adm-d-back, [role="dialog"], .dp-modal, .dp-modal-body, .dp-detail-body')) return;
       var cpfDigits = t.replace(/\D/g, '');
 
       // sobe até achar uma linha que tenha um botão de lixeira (e ainda não tenha o nosso)
