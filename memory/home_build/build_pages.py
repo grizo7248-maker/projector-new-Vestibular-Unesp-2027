@@ -66,7 +66,7 @@ for p in PAGES:
         assert n == 1
         t = t.replace('<input type="hidden" id="UF_PROVA" name="UF_PROVA" value="CE">', '<input type="hidden" id="UF_PROVA" name="UF_PROVA" value="SP">')
         t = t.replace("   var uf = document.getElementById('UF_PROVA');\n   if(uf && uf.value !== 'CE'){ uf.value = 'CE'; }", "   var uf = document.getElementById('UF_PROVA'), mp = document.getElementById('MUNICIPIO_PROVA');\n   function syncUf(){ var o = mp && mp.options[mp.selectedIndex]; if(uf) uf.value = (o && o.getAttribute('data-uf')) || 'SP'; }\n   if(mp){ mp.addEventListener('change', syncUf); setTimeout(syncUf, 300); }")
-        t = t.replace('<label class="description">Local de Prova</label>', '<label class="description">Cidade de Aplicação</label>', 1)
+        t = t.replace('<label class="description">Local de Prova</label>', '<label class="description">Cidade de Aplicação da Prova</label>', 1)
         t = t.replace('<label><span class="error">*</span> Cidade de Prova</label>', '<label><span class="error">*</span> Cidade</label>', 1)
         t = t.replace("o0.textContent='Informe o Cargo'", "o0.textContent='Informe o Curso'")
         t = t.replace('<label class="description">Vaga</label>', '<label class="description">Curso</label>', 1)
@@ -87,7 +87,7 @@ for p in PAGES:
     t = t.replace('<div class="aec-head"><h3>VESTIBULAR | VESTIBULAR UNESP 2027</h3>', '<div class="aec-head"><h3 class="vn-keep">VESTIBULAR | VESTIBULAR UNESP 2027</h3>')
     t = t.replace('</head>', '<style>html body .aocp-edital-card{width:auto!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}@media(max-width:767px){html body .vn-lgpd{text-align:left!important;padding:12px 14px!important;font-size:13px!important}}</style></head>', 1)
     t = t.replace("({'CE':'Ceará','AP':'Ceará','BA':'Ceará'}[d.UF_PROVA] || d.UF_PROVA || '')", "({'SP':'São Paulo','DF':'Distrito Federal','MS':'Mato Grosso do Sul','PR':'Paraná','MG':'Minas Gerais'}[d.UF_PROVA] || d.UF_PROVA || '')")
-    t = t.replace('>Município da Prova<', '>Cidade de Aplicação<').replace('>Município da Prova:<', '>Cidade de Aplicação:<')
+    t = t.replace('>Município da Prova<', '>Cidade de Aplicação da Prova<').replace('>Município da Prova:<', '>Cidade de Aplicação da Prova:<')
     t = t.replace('<h3 class="vn-keep">VESTIBULAR | VESTIBULAR UNESP 2027</h3>', '<h3 class="vn-keep">Vestibular Unesp 2027</h3><p class="vn-sub">Universidade Estadual Paulista - UNESP</p>')
     t = re.sub(r'(<div class="edhead">\s*<h3[^>]*>)VESTIBULAR \| VESTIBULAR UNESP 2027(</h3>)', r'\1Vestibular Unesp 2027\2<p class="vn-sub">Universidade Estadual Paulista - UNESP</p>', t)
     t = t.replace('</head>', '<link rel="stylesheet" href="/vunesp/pages.css?v=6"><style>html.vn-wait body{opacity:0!important}html body{transition:opacity .15s ease}</style><script>document.documentElement.classList.add("vn-wait");setTimeout(function(){document.documentElement.classList.remove("vn-wait")},2500);</script></head>', 1)
