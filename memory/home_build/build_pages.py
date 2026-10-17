@@ -44,6 +44,8 @@ REPL = [
     ("var sexoMap = {'0':'MASCULINO','1':'FEMININO'};", "var sexoMap = {'0':'MASCULINO','1':'FEMININO','2':'INTERSEXO','3':'OUTRO','4':'PREFIRO NÃO INFORMAR'};"),
     ('<b>15/09/2026</b>', '<b>04/09/2026</b>'), ('<b>15/10/2026</b>', '<b>20/10/2026</b>'),
     ('<h2 class="tituloPagina"><span>Formulário de Inscrição</span></h2>\n<form action=""', '<h2 class="tituloPagina"><span>Formulário de Inscrição</span></h2>\n<div class="vn-lgpd" data-testid="lgpd-aviso" style="border:1px solid #ddd;background:#fff;padding:16px 20px;margin:0 0 20px;font-size:14px;line-height:1.6;color:#444;text-align:justify;border-radius:3px">A Fundação VUNESP atende à Lei nº 13.709/18 – Lei Geral de Proteção de Dados Pessoais (LGPD). Seus dados pessoais serão tratados apenas para fins deste vestibular, com proteção à sua liberdade e privacidade, e você pode exercer os direitos previstos no artigo 18 da LGPD.</div>\n<form action=""'),
+    ('background:rgba(0,107,45,0.85);z-index:99999;align-items:center;justify-content:center;flex-direction:column;color:#fff;', 'background:rgba(255,255,255,0.88);z-index:99999;align-items:center;justify-content:center;flex-direction:column;color:#333;'),
+    ('border:4px solid rgba(255,255,255,0.2);border-top-color:#00a84a;', 'border:4px solid #e5e5e5;border-top-color:#d9534f;'),
     ('#008C00', '#1172db'), ('#0f6a10', '#0b4f9c'), ('#e8f5e9', '#eef5fd'), ('#f4faf6', '#eef5fd'), ('#1f3d2b', '#0b4f9c'), ('#2e7d32', '#1172db'), ('#eef6f0', '#eef5fd'), ('#d5e3da', '#d3e3f6'), ('#eaf6ee', '#e6f0fc'), ('#d9e6dd', '#d3e3f6'),
 ]
 CURSOS = [l.strip() for l in open('/app/memory/cursos/cursos.txt', encoding='utf-8') if l.strip()]
