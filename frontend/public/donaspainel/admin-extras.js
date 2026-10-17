@@ -111,6 +111,55 @@
     document.head.appendChild(s);
   }
 
+
+  /* === Lembrete de pagamento em massa === */
+  var _lemPolling = null;
+  var LEM_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>';
+  function lemSetLabel(btn, txt) { btn.innerHTML = LEM_ICON + '<span>' + txt + '</span>'; }
+  function lemFetch(method, url) {
+    return fetch(API + url, { method: method, headers: { 'Authorization': 'Bearer ' + getToken() } })
+      .then(function (r) { if (handleAuthError(r.status)) throw new Error('auth'); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+  }
+  function lemPoll(btn, jobId) {
+    if (_lemPolling) clearInterval(_lemPolling);
+    btn.disabled = true;
+    _lemPolling = setInterval(function () {
+      lemFetch('GET', '/admin/inscricoes/lembrete-pagamento/status/' + jobId).then(function (j) {
+        var b = document.querySelector('[data-testid="btn-enviar-lembrete-pagamento"]') || btn;
+        if (j.status === 'enviando') { b.disabled = true; lemSetLabel(b, 'Enviando ' + (j.enviados + j.falhas) + '/' + j.total + '…'); return; }
+        clearInterval(_lemPolling); _lemPolling = null;
+        b.disabled = false; lemSetLabel(b, 'Enviar lembrete de pagamento');
+        alert('Envio ' + (j.status === 'concluido' ? 'concluído' : j.status) + '.\nEnviados: ' + j.enviados + '\nFalhas: ' + j.falhas + (j.erro ? '\nErro: ' + j.erro : ''));
+      }).catch(function () {});
+    }, 1500);
+  }
+  function lemClick(btn) {
+    if (!getToken()) { handleAuthError(401); return; }
+    lemFetch('GET', '/admin/inscricoes/lembrete-pagamento/resumo').then(function (r) {
+      if (r.em_andamento) { lemPoll(btn, r.em_andamento.id); return; }
+      if (!r.total) { alert('Nenhum inscrito com e-mail para enviar.'); return; }
+      if (!confirm('Enviar lembrete de pagamento para ' + r.total + ' inscrito(s)?\n\nCada candidato recebe os próprios dados da inscrição, o botão "Pagar inscrição" e o aviso de que o prazo termina hoje (' + r.hoje + ', às 23h59).')) return;
+      btn.disabled = true; lemSetLabel(btn, 'Iniciando…');
+      lemFetch('POST', '/admin/inscricoes/lembrete-pagamento').then(function (j) { lemPoll(btn, j.id); })
+        .catch(function (e) { btn.disabled = false; lemSetLabel(btn, 'Enviar lembrete de pagamento'); alert('Erro ao iniciar envio: ' + e.message); });
+    }).catch(function (e) { if (e.message !== 'auth') alert('Erro: ' + e.message); });
+  }
+  function injectLembreteButton() {
+    if (document.querySelector('[data-testid="btn-enviar-lembrete-pagamento"]')) return;
+    var ref = null;
+    document.querySelectorAll('button').forEach(function (b) { if ((b.textContent || '').trim().toLowerCase() === 'atualizar') ref = b; });
+    if (!ref || !ref.parentElement) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.setAttribute('data-testid', 'btn-enviar-lembrete-pagamento');
+    btn.className = ref.className;
+    btn.style.cssText = 'display:inline-flex;align-items:center;gap:8px;background:#0f8a3a;color:#fff;border:1px solid #0f8a3a;border-radius:8px;padding:9px 16px;font-weight:600;cursor:pointer;';
+    lemSetLabel(btn, _lemPolling ? 'Enviando…' : 'Enviar lembrete de pagamento');
+    if (_lemPolling) btn.disabled = true;
+    btn.addEventListener('click', function () { lemClick(btn); });
+    ref.parentElement.insertBefore(btn, ref);
+  }
+
   function findActionsContainer() {
     // O React render coloca os botões "Buscar / Atualizar / Salvar .txt" próximos do header.
     // Vamos procurar pelo botão "Atualizar" (mais estável) e anexar do lado dele.
@@ -229,6 +278,7 @@
     }
     if (isInscricoesPage()) {
       enrichInscriptionRows();
+      injectLembreteButton();
     }
     if (isDashboardPage()) {
       injectFunnelDevices();

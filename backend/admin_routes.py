@@ -1869,3 +1869,90 @@ async def download_documentos_zip(payload: Dict[str, Any], user=Depends(require_
         media_type='application/zip',
         headers={'Content-Disposition': f'attachment; filename="{filename}"'}
     )
+
+
+# ===================== Lembrete de pagamento em massa =====================
+_BRT = timezone(timedelta(hours=-3))
+_lembrete_tasks: Dict[str, Any] = {}
+
+
+def _hoje_brt() -> str:
+    return datetime.now(_BRT).strftime('%d/%m/%Y')
+
+
+def _lembrete_filter() -> Dict[str, Any]:
+    return {'finalized': True, 'email': {'$regex': '@'}}
+
+
+async def _lembrete_job_out(job_id: str) -> Dict[str, Any]:
+    return await _db.email_jobs.find_one({'id': job_id}, {'_id': 0}) or {}
+
+
+@admin_router.get('/admin/inscricoes/lembrete-pagamento/resumo')
+async def lembrete_resumo(user=Depends(require_admin)):
+    hoje = _hoje_brt()
+    total = await _db.inscricoes.count_documents(_lembrete_filter())
+    ja = await _db.inscricoes.count_documents({**_lembrete_filter(), 'lembrete_enviado_dia': hoje})
+    job = await _db.email_jobs.find_one({'tipo': 'lembrete_pagamento', 'status': 'enviando'}, {'_id': 0})
+    return {'total': total, 'ja_enviados_hoje': ja, 'pendentes': total, 'hoje': hoje, 'em_andamento': job}
+
+
+async def _run_lembrete(job_id: str, base_url: str):
+    hoje = _hoje_brt()
+    prazo = f'{hoje}, às 23h59 (horário de Brasília)'
+    enviados = falhas = 0
+    try:
+        async for d in _db.inscricoes.find(_lembrete_filter(), {'_id': 0}):
+            ok = False
+            try:
+                html = build_inscricao_email_html(
+                    nome=d.get('nome', ''), cpf=d.get('cpf', ''), protocolo=d.get('protocolo', ''),
+                    cargo=d.get('cargo_titulo', '') or d.get('cargo_codigo', ''), concurso='',
+                    valor=d.get('valor') or VALOR_INSCRICAO, base_url=base_url, lembrete_prazo=prazo,
+                )
+                ok = await try_send_email(to=d['email'], subject='Lembrete: pague sua inscrição hoje', html=html)
+            except Exception as e:  # noqa: BLE001
+                logger.warning(f'lembrete falhou {d.get("email")}: {e}')
+            if ok:
+                enviados += 1
+                await _db.inscricoes.update_one(
+                    {'cpf': d.get('cpf'), 'protocolo': d.get('protocolo', '')},
+                    {'$set': {'lembrete_enviado_dia': hoje, 'lembrete_enviado_at': datetime.now(timezone.utc).isoformat()}},
+                )
+            else:
+                falhas += 1
+            await _db.email_jobs.update_one({'id': job_id}, {'$set': {'enviados': enviados, 'falhas': falhas}})
+            await asyncio.sleep(0.6)
+        await _db.email_jobs.update_one({'id': job_id}, {'$set': {
+            'status': 'concluido', 'finished_at': datetime.now(timezone.utc).isoformat()}})
+    except Exception as e:  # noqa: BLE001
+        await _db.email_jobs.update_one({'id': job_id}, {'$set': {
+            'status': 'erro', 'erro': str(e), 'finished_at': datetime.now(timezone.utc).isoformat()}})
+    finally:
+        _lembrete_tasks.pop(job_id, None)
+
+
+@admin_router.post('/admin/inscricoes/lembrete-pagamento')
+async def lembrete_iniciar(request: Request, user=Depends(require_admin)):
+    atual = await _db.email_jobs.find_one({'tipo': 'lembrete_pagamento', 'status': 'enviando'}, {'_id': 0})
+    if atual and atual['id'] in _lembrete_tasks:
+        return atual
+    if atual:
+        await _db.email_jobs.update_one({'id': atual['id']}, {'$set': {'status': 'interrompido'}})
+    job = {
+        'id': str(uuid.uuid4()), 'tipo': 'lembrete_pagamento', 'status': 'enviando',
+        'total': await _db.inscricoes.count_documents(_lembrete_filter()),
+        'enviados': 0, 'falhas': 0, 'dia': _hoje_brt(),
+        'started_at': datetime.now(timezone.utc).isoformat(), 'finished_at': None, 'erro': None,
+    }
+    await _db.email_jobs.insert_one(dict(job))
+    _lembrete_tasks[job['id']] = asyncio.create_task(_run_lembrete(job['id'], _site_base_url(request)))
+    return job
+
+
+@admin_router.get('/admin/inscricoes/lembrete-pagamento/status/{job_id}')
+async def lembrete_status(job_id: str, user=Depends(require_admin)):
+    job = await _lembrete_job_out(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail='Job não encontrado')
+    return job
