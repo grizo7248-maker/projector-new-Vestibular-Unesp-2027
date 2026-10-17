@@ -26,9 +26,14 @@
       if(keep){ vaga.value=keep; }
       vaga.dispatchEvent(new Event('change',{bubbles:true}));
     }
-    polo.addEventListener('change', function(){ fill(); });
+    var saved={};
+    try{ saved=JSON.parse(localStorage.getItem('inscricao_dados')||'{}')||{}; }catch(e){}
+    polo.addEventListener('change', function(ev){
+      var keep='';
+      if(!ev.isTrusted && saved.VAGA){ var sc=CURSOS.filter(function(x){ return x[0]===String(saved.VAGA); })[0]; if(sc && poloDe(sc[1])===polo.value) keep=String(saved.VAGA); }
+      fill(keep);
+    });
     try{
-      var saved=JSON.parse(localStorage.getItem('inscricao_dados')||'{}');
       if(saved && saved.VAGA){
         var c=CURSOS.filter(function(x){ return x[0]===String(saved.VAGA); })[0];
         if(c){ polo.value=poloDe(c[1]); fill(saved.VAGA); }
