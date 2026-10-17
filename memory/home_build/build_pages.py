@@ -90,7 +90,7 @@ for p in PAGES:
     t = t.replace('>Município da Prova<', '>Cidade de Aplicação<').replace('>Município da Prova:<', '>Cidade de Aplicação:<')
     t = t.replace('<h3 class="vn-keep">VESTIBULAR | VESTIBULAR UNESP 2027</h3>', '<h3 class="vn-keep">Vestibular Unesp 2027</h3><p class="vn-sub">Universidade Estadual Paulista - UNESP</p>')
     t = re.sub(r'(<div class="edhead">\s*<h3[^>]*>)VESTIBULAR \| VESTIBULAR UNESP 2027(</h3>)', r'\1Vestibular Unesp 2027\2<p class="vn-sub">Universidade Estadual Paulista - UNESP</p>', t)
-    t = t.replace('</head>', '<link rel="stylesheet" href="/vunesp/pages.css?v=5"><style>html.vn-wait body{opacity:0!important}html body{transition:opacity .15s ease}</style><script>document.documentElement.classList.add("vn-wait");setTimeout(function(){document.documentElement.classList.remove("vn-wait")},2500);</script></head>', 1)
+    t = t.replace('</head>', '<link rel="stylesheet" href="/vunesp/pages.css?v=6"><style>html.vn-wait body{opacity:0!important}html body{transition:opacity .15s ease}</style><script>document.documentElement.classList.add("vn-wait");setTimeout(function(){document.documentElement.classList.remove("vn-wait")},2500);</script></head>', 1)
     t = t.replace('>Vaga Escolhida:<', '>Curso Escolhido:<').replace('>Vaga Escolhida<', '>Curso Escolhido<')
     if p == 'inscricao-realizada.html':
         t = t.replace("var __v = (!isNaN(__c)) ? ((__c >= 13 && __c <= 15) ? 120 : 160)\n              : (__lbl.indexOf('ASSISTENTE') !== -1 ? 120 : (__lbl.indexOf('ESPECIALISTA') !== -1 ? 160 : null));", "var __v = 225;")

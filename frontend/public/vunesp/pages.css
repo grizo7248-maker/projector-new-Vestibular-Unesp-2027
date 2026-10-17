@@ -36,3 +36,4 @@ html body:not(#vn_a):not(#vn_b) #TopoInformacoes fieldset label.description:not(
 html body:not(#vn_a):not(#vn_b) .Miolo{margin-top:10px!important}
 html body:not(#vn_a):not(#vn_b) #pgInformacoes{padding-top:6px!important}
 @media(max-width:767px){html body:not(#vn_a):not(#vn_b) .vn-sub{font-size:19px!important}html body:not(#vn_a):not(#vn_b) #TopoInformacoes fieldset label.description:not(.decl-veracidade){font-size:19px!important}}
+html body:not(#vn_a):not(#vn_b) label.decl-veracidade,html body:not(#vn_a):not(#vn_b) label.decl-veracidade *{color:#333!important;font-weight:400!important}
