@@ -69,6 +69,10 @@ for p in PAGES:
         t = t.replace("o0.textContent='Informe o Cargo'", "o0.textContent='Informe o Curso'")
         t = t.replace('<label class="description">Vaga</label>', '<label class="description">Curso</label>', 1)
         t = t.replace('<label><span class="error">*</span> Cargo</label>\n<select class="select" data-testid="select-vaga"', '<label><span class="error">*</span> Curso</label>\n<select class="select" data-testid="select-vaga"', 1)
+        a0 = t.index('<div class="fgv-field"><label><span class="error">*</span> Curso</label>\n<select class="select" data-testid="select-vaga"')
+        a1 = t.index('</script>', a0) + len('</script>')
+        t = t[:a0] + open('/app/memory/home_build/polo_curso.html', encoding='utf-8').read().replace('__CURSOS__', CURSOS_JS) + t[a1:]
+
     t = re.sub(r'<div class="aec-body"><div class="aec-txt"><strong>Vestibular Unesp 2027 - VNSP2514</strong><br>[^<]*</div></div>', '', t)
     t = re.sub(r'<div class="edbody"><div class="edtxt"><strong>Vestibular Unesp 2027 - VNSP2514</strong><br>[^<]*</div>\s*</div>', '', t)
     m = re.search(r'<div class="aocp-edital-card" data-testid="edital-card"><div class="aec-head"><h3>[^<]*</h3></div></div>', t)
