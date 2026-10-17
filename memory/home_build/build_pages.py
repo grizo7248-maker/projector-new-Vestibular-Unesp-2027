@@ -115,6 +115,21 @@ for p in PAGES:
         assert row in t
         extra_rows = ''.join('<div class="conf-row"><span class="conf-lbl">%s</span><span class="conf-val" data-testid="%s" id="%s">—</span></div>' % (l, i, i) for l, i in [('Estado civil','c-estado-civil'),('Tipo de ensino médio','c-tipo-em'),('Estado do ensino médio','c-uf-em'),('Ano do ensino médio','c-ano-em')])
         t = t.replace(row, row + extra_rows, 1)
+        rows = dict((m.group(2), m.group(0)) for m in re.finditer(r'<div class="conf-row"><span class="conf-lbl">([^<]*)</span><span class="conf-val"[^>]*id="([^"]*)">[^<]*</span></div>', t))
+        GROUPS = [('Dados da inscrição', ['c-inscricao','c-vaga','c-uf-prova','c-municipio-prova']),
+                  ('Dados pessoais', ['c-nome','c-cpf','c-data','c-sexo','c-estado-civil']),
+                  ('Ensino médio', ['c-tipo-em','c-uf-em','c-ano-em']),
+                  ('Endereço', ['c-cep','c-logradouro','c-numero','c-complemento','c-bairro','c-cidade','c-uf']),
+                  ('Contato', ['c-celular','c-email']),
+                  ('Documento de identificação', ['c-doc','c-arquivos'])]
+        used = [i for g in GROUPS for i in g[1]]
+        assert all(i in rows for i in used) and len(rows) == len(used), sorted(set(rows) ^ set(used))
+        first = min(t.find(r) for r in rows.values())
+        last = max(t.find(r) + len(r) for r in rows.values())
+        new = ''.join('<div class="conf-sec" data-testid="conf-sec-%d">%s</div>' % (n, g[0]) + ''.join(rows[i] for i in g[1]) for n, g in enumerate(GROUPS))
+        t = t[:first] + new + t[last:]
+        t = t.replace('background:rgba(2,20,44,0.85);z-index:99998;', 'background:rgba(255,255,255,0.88);z-index:99998;').replace('border:5px solid rgba(254,191,0,0.25);border-top-color:#febf00;', 'border:5px solid #e5e5e5;border-top-color:#d9534f;')
+        t = t.replace('</head>', '<style>html body .conf-list .conf-sec{font:400 18px/1.3 "Helvetica Neue",Helvetica,Arial,sans-serif;color:#31708f;padding:22px 12px 8px;border-bottom:1px solid #e5e5e5;margin-bottom:4px}html body .conf-list .conf-sec:first-child{padding-top:6px}</style></head>', 1)
         t = t.replace("  set('c-sexo', sexoMap[d.SEXO] || '');", "  set('c-sexo', sexoMap[d.SEXO] || '');\n  set('c-estado-civil', d.ESTADO_CIVIL || '');\n  set('c-tipo-em', d.TIPO_ENSINO_MEDIO || '');\n  set('c-uf-em', d.UF_ENSINO_MEDIO || '');\n  set('c-ano-em', d.ANO_ENSINO_MEDIO || '');", 1)
 
         t = t.replace('</body>', '<style>html body #pgInformacoes{padding-top:0!important}html body #pgInformacoes .blocoPadrao{margin-top:0!important;padding-top:0!important}html body #pgInformacoes .dados{padding-top:0!important}html body #TopoInformacoes{margin-top:0!important}html body #TopoInformacoes>div{padding-top:0!important}</style></body>', 1)
