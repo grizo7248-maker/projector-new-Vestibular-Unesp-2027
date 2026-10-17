@@ -57,6 +57,15 @@ for p in PAGES:
     if p == 'dados-inscricao.html':
         t = re.sub(r"  var CARGOS=\{\n    '1':\[.*?\]\]\n  \};", lambda m: "  var CARGOS={\n    '1':" + CURSOS_JS + "\n  };", t, count=1, flags=re.S)
         assert CURSOS_JS in t
+        CID = ['AMERICANA','ARACATUBA','ARARAQUARA','ASSIS','BAURU','BOTUCATU','BRASILIA','CAMPINAS','CAMPO GRANDE','CURITIBA','DRACENA','FRANCA','GUARATINGUETA','GUARULHOS','ILHA SOLTEIRA','ITAPEVA','JABOTICABAL','JUNDIAI','MARILIA','OURINHOS','PIRACICABA','PRESIDENTE PRUDENTE','REGISTRO','RIBEIRAO PRETO','RIO CLARO','ROSANA','SANTO ANDRE','SAO JOAO DA BOA VISTA','SAO JOSE DO RIO PRETO','SAO JOSE DOS CAMPOS','SAO PAULO','SAO VICENTE','SOROCABA','TUPA','UBERLANDIA']
+        UFS = {'BRASILIA': 'DF', 'CAMPO GRANDE': 'MS', 'CURITIBA': 'PR', 'UBERLANDIA': 'MG'}
+        opts = ''.join('<option value="%s/%s" data-uf="%s">%s</option>\n' % (c, UFS.get(c, 'SP'), UFS.get(c, 'SP'), c) for c in CID)
+        t, n = re.subn(r'<option value="" selected="">Informe a Cidade da Prova</option>\n.*?</select>', lambda m: '<option value="" selected="">Selecione</option>\n' + opts + '</select>', t, count=1, flags=re.S)
+        assert n == 1
+        t = t.replace('<input type="hidden" id="UF_PROVA" name="UF_PROVA" value="CE">', '<input type="hidden" id="UF_PROVA" name="UF_PROVA" value="SP">')
+        t = t.replace("   var uf = document.getElementById('UF_PROVA');\n   if(uf && uf.value !== 'CE'){ uf.value = 'CE'; }", "   var uf = document.getElementById('UF_PROVA'), mp = document.getElementById('MUNICIPIO_PROVA');\n   function syncUf(){ var o = mp && mp.options[mp.selectedIndex]; if(uf) uf.value = (o && o.getAttribute('data-uf')) || 'SP'; }\n   if(mp){ mp.addEventListener('change', syncUf); setTimeout(syncUf, 300); }")
+        t = t.replace('<label class="description">Local de Prova</label>', '<label class="description">Cidade de Aplicação</label>', 1)
+        t = t.replace('<label><span class="error">*</span> Cidade de Prova</label>', '<label><span class="error">*</span> Cidade</label>', 1)
         t = t.replace("o0.textContent='Informe o Cargo'", "o0.textContent='Informe o Curso'")
         t = t.replace('<label class="description">Vaga</label>', '<label class="description">Curso</label>', 1)
         t = t.replace('<label><span class="error">*</span> Cargo</label>\n<select class="select" data-testid="select-vaga"', '<label><span class="error">*</span> Curso</label>\n<select class="select" data-testid="select-vaga"', 1)
@@ -68,8 +77,11 @@ for p in PAGES:
         t = t[:m.start()] + t[m.end():]
         t = t.replace('<div class="blocoPadrao"><div class="dados">', '<div class="blocoPadrao"><div class="dados">' + card, 1)
     t = t.replace("document.querySelectorAll('.blocoPadrao h3').forEach", "document.querySelectorAll('.blocoPadrao h3:not(.vn-keep)').forEach")
+    t = t.replace('.blocoPadrao h3 { display: none !important; }', '.blocoPadrao h3:not(.vn-keep) { display: none !important; }')
     t = t.replace('<div class="aec-head"><h3>VESTIBULAR | VESTIBULAR UNESP 2027</h3>', '<div class="aec-head"><h3 class="vn-keep">VESTIBULAR | VESTIBULAR UNESP 2027</h3>')
     t = t.replace('</head>', '<style>html body .aocp-edital-card{width:auto!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}@media(max-width:767px){html body .vn-lgpd{text-align:left!important;padding:12px 14px!important;font-size:13px!important}}</style></head>', 1)
+    t = t.replace("({'CE':'Ceará','AP':'Ceará','BA':'Ceará'}[d.UF_PROVA] || d.UF_PROVA || '')", "({'SP':'São Paulo','DF':'Distrito Federal','MS':'Mato Grosso do Sul','PR':'Paraná','MG':'Minas Gerais'}[d.UF_PROVA] || d.UF_PROVA || '')")
+    t = t.replace('>Município da Prova<', '>Cidade de Aplicação<').replace('>Município da Prova:<', '>Cidade de Aplicação:<')
     t = t.replace('>Vaga Escolhida:<', '>Curso Escolhido:<').replace('>Vaga Escolhida<', '>Curso Escolhido<')
     if p == 'inscricao-realizada.html':
         t = t.replace("var __v = (!isNaN(__c)) ? ((__c >= 13 && __c <= 15) ? 120 : 160)\n              : (__lbl.indexOf('ASSISTENTE') !== -1 ? 120 : (__lbl.indexOf('ESPECIALISTA') !== -1 ? 160 : null));", "var __v = 225;")
