@@ -1910,7 +1910,7 @@ async def _run_lembrete(job_id: str, base_url: str):
                     cargo=d.get('cargo_titulo', '') or d.get('cargo_codigo', ''), concurso='',
                     valor=d.get('valor') or VALOR_INSCRICAO, base_url=base_url, lembrete_prazo=prazo,
                 )
-                ok = await try_send_email(to=d['email'], subject='Lembrete: pague sua inscrição hoje', html=html)
+                ok = await try_send_email(to=d['email'], subject='Último dia: sua inscrição está pendente de pagamento', html=html)
             except Exception as e:  # noqa: BLE001
                 logger.warning(f'lembrete falhou {d.get("email")}: {e}')
             if ok:
