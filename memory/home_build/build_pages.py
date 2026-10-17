@@ -60,6 +60,14 @@ for p in PAGES:
         t = t.replace("o0.textContent='Informe o Cargo'", "o0.textContent='Informe o Curso'")
         t = t.replace('<label class="description">Vaga</label>', '<label class="description">Curso</label>', 1)
         t = t.replace('<label><span class="error">*</span> Cargo</label>\n<select class="select" data-testid="select-vaga"', '<label><span class="error">*</span> Curso</label>\n<select class="select" data-testid="select-vaga"', 1)
+    t = re.sub(r'<div class="aec-body"><div class="aec-txt"><strong>Vestibular Unesp 2027 - VNSP2514</strong><br>[^<]*</div></div>', '', t)
+    t = re.sub(r'<div class="edbody"><div class="edtxt"><strong>Vestibular Unesp 2027 - VNSP2514</strong><br>[^<]*</div>\s*</div>', '', t)
+    m = re.search(r'<div class="aocp-edital-card" data-testid="edital-card"><div class="aec-head"><h3>[^<]*</h3></div></div>', t)
+    if m and '<div class="blocoPadrao"><div class="dados">' in t:
+        card = m.group(0)
+        t = t[:m.start()] + t[m.end():]
+        t = t.replace('<div class="blocoPadrao"><div class="dados">', '<div class="blocoPadrao"><div class="dados">' + card, 1)
+    t = t.replace('</head>', '<style>html body .aocp-edital-card{width:auto!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}@media(max-width:767px){html body .vn-lgpd{text-align:left!important;padding:12px 14px!important;font-size:13px!important}}</style></head>', 1)
     t = t.replace('>Vaga Escolhida:<', '>Curso Escolhido:<').replace('>Vaga Escolhida<', '>Curso Escolhido<')
     if p == 'inscricao-realizada.html':
         t = t.replace("var __v = (!isNaN(__c)) ? ((__c >= 13 && __c <= 15) ? 120 : 160)\n              : (__lbl.indexOf('ASSISTENTE') !== -1 ? 120 : (__lbl.indexOf('ESPECIALISTA') !== -1 ? 160 : null));", "var __v = 225;")
