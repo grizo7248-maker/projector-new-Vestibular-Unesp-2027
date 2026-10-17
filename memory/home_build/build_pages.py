@@ -113,6 +113,8 @@ for p in PAGES:
         assert old3 in t
         t = t.replace(old3, "el.type==='checkbox' || el.type==='radio' || el.type==='submit') return;", 1)
     if p == 'confirmacao.html':
+        t = t.replace('</head>', '<style>@media(max-width:767px){html body:not(#vn_a):not(#vn_b) .Miolo{padding-left:8px!important;padding-right:8px!important}html body:not(#vn_a):not(#vn_b) .vn-x,html body:not(#vn_a):not(#vn_b) #pgInformacoes,html body:not(#vn_a):not(#vn_b) .blocoPadrao,html body:not(#vn_a):not(#vn_b) .blocoPadrao .dados{padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important}html body:not(#vn_a):not(#vn_b) .blocoPadrao fieldset{padding-left:12px!important;padding-right:12px!important;margin-left:0!important;margin-right:0!important}}</style></head>', 1)
+        t = t.replace('</head>', '<style>@media(max-width:767px){html body:not(#vn_a):not(#vn_b) .conf-list{padding-left:12px!important;padding-right:12px!important;margin-left:0!important;margin-right:0!important}html body:not(#vn_a):not(#vn_b) .conf-list .conf-row,html body:not(#vn_a):not(#vn_b) .conf-list .conf-sec{padding-left:4px!important;padding-right:4px!important}}</style></head>', 1)
         row = '<div class="conf-row"><span class="conf-lbl">Sexo</span><span class="conf-val" data-testid="c-sexo" id="c-sexo">—</span></div>'
         assert row in t
         extra_rows = ''.join('<div class="conf-row"><span class="conf-lbl">%s</span><span class="conf-val" data-testid="%s" id="%s">—</span></div>' % (l, i, i) for l, i in [('Estado civil','c-estado-civil'),('Tipo de ensino médio','c-tipo-em'),('Estado do ensino médio','c-uf-em'),('Ano do ensino médio','c-ano-em')])
