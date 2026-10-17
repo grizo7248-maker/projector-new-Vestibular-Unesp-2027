@@ -101,6 +101,7 @@ for p in PAGES:
         anchor = '<option value="4">PREFIRO NÃO INFORMAR</option>\n</select></div>\n</fieldset>'
         assert anchor in t
         t = t.replace(anchor, anchor + '\n' + q, 1)
+        t = t.replace('</head>', '<style>@media(max-width:767px){html body:not(#vn_a):not(#vn_b) .Miolo{padding-left:8px!important;padding-right:8px!important}html body:not(#vn_a):not(#vn_b) .vn-x,html body:not(#vn_a):not(#vn_b) #pgInformacoes,html body:not(#vn_a):not(#vn_b) .blocoPadrao,html body:not(#vn_a):not(#vn_b) .blocoPadrao .dados{padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important}html body:not(#vn_a):not(#vn_b) .blocoPadrao fieldset{padding-left:12px!important;padding-right:12px!important;margin-left:0!important;margin-right:0!important}}</style></head>', 1)
         old = "      if(el.type==='checkbox'){ if(!el.checked) ok=false; continue; }"
         assert old in t
         t = t.replace(old, old + "\n      if(el.type==='radio'){ var g=form.querySelector('input[name=\"'+el.name+'\"]:checked'); if(!g) ok=false; continue; }", 1)
