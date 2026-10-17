@@ -46,12 +46,23 @@ REPL = [
     ('<h2 class="tituloPagina"><span>Formulário de Inscrição</span></h2>\n<form action=""', '<h2 class="tituloPagina"><span>Formulário de Inscrição</span></h2>\n<div class="vn-lgpd" data-testid="lgpd-aviso" style="border:1px solid #ddd;background:#fff;padding:16px 20px;margin:0 0 20px;font-size:14px;line-height:1.6;color:#444;text-align:justify;border-radius:3px">A Fundação VUNESP atende à Lei nº 13.709/18 – Lei Geral de Proteção de Dados Pessoais (LGPD). Seus dados pessoais serão tratados apenas para fins deste vestibular, com proteção à sua liberdade e privacidade, e você pode exercer os direitos previstos no artigo 18 da LGPD.</div>\n<form action=""'),
     ('#008C00', '#1172db'), ('#0f6a10', '#0b4f9c'), ('#e8f5e9', '#eef5fd'), ('#f4faf6', '#eef5fd'), ('#1f3d2b', '#0b4f9c'), ('#2e7d32', '#1172db'), ('#eef6f0', '#eef5fd'), ('#d5e3da', '#d3e3f6'), ('#eaf6ee', '#e6f0fc'), ('#d9e6dd', '#d3e3f6'),
 ]
+CURSOS = [l.strip() for l in open('/app/memory/cursos/cursos.txt', encoding='utf-8') if l.strip()]
+CURSOS_JS = json.dumps([[str(i + 1), c, '225.00'] for i, c in enumerate(CURSOS)], ensure_ascii=False)
 PAGES = ['inscricao.html', 'dados-inscricao.html', 'confirmacao.html', 'inscricao-realizada.html', 'pagamento-pix.html', 'minhas-inscricoes.html']
 for p in PAGES:
     t = open(BK + '/' + p, encoding='utf-8').read()
     t = re.sub(r'<footer id="aocp-footer" class="seduc-footer".*?</footer>', '', t, flags=re.S)
     for a, b in REPL:
         t = t.replace(a, b)
+    if p == 'dados-inscricao.html':
+        t = re.sub(r"  var CARGOS=\{\n    '1':\[.*?\]\]\n  \};", lambda m: "  var CARGOS={\n    '1':" + CURSOS_JS + "\n  };", t, count=1, flags=re.S)
+        assert CURSOS_JS in t
+        t = t.replace("o0.textContent='Informe o Cargo'", "o0.textContent='Informe o Curso'")
+        t = t.replace('<label class="description">Vaga</label>', '<label class="description">Curso</label>', 1)
+        t = t.replace('<label><span class="error">*</span> Cargo</label>\n<select class="select" data-testid="select-vaga"', '<label><span class="error">*</span> Curso</label>\n<select class="select" data-testid="select-vaga"', 1)
+    t = t.replace('>Vaga Escolhida:<', '>Curso Escolhido:<').replace('>Vaga Escolhida<', '>Curso Escolhido<')
+    if p == 'minhas-inscricoes.html':
+        t = t.replace('>Vaga<', '>Curso<')
     if p == 'inscricao.html':
         q = open('/app/memory/home_build/questionario.html', encoding='utf-8').read()
         anchor = '<option value="4">PREFIRO NÃO INFORMAR</option>\n</select></div>\n</fieldset>'
