@@ -63,10 +63,12 @@ for p in PAGES:
     t = re.sub(r'<div class="aec-body"><div class="aec-txt"><strong>Vestibular Unesp 2027 - VNSP2514</strong><br>[^<]*</div></div>', '', t)
     t = re.sub(r'<div class="edbody"><div class="edtxt"><strong>Vestibular Unesp 2027 - VNSP2514</strong><br>[^<]*</div>\s*</div>', '', t)
     m = re.search(r'<div class="aocp-edital-card" data-testid="edital-card"><div class="aec-head"><h3>[^<]*</h3></div></div>', t)
-    if m and '<div class="blocoPadrao"><div class="dados">' in t:
+    if m and p != 'confirmacao.html' and '<div class="blocoPadrao"><div class="dados">' in t:
         card = m.group(0)
         t = t[:m.start()] + t[m.end():]
         t = t.replace('<div class="blocoPadrao"><div class="dados">', '<div class="blocoPadrao"><div class="dados">' + card, 1)
+    t = t.replace("document.querySelectorAll('.blocoPadrao h3').forEach", "document.querySelectorAll('.blocoPadrao h3:not(.vn-keep)').forEach")
+    t = t.replace('<div class="aec-head"><h3>VESTIBULAR | VESTIBULAR UNESP 2027</h3>', '<div class="aec-head"><h3 class="vn-keep">VESTIBULAR | VESTIBULAR UNESP 2027</h3>')
     t = t.replace('</head>', '<style>html body .aocp-edital-card{width:auto!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}@media(max-width:767px){html body .vn-lgpd{text-align:left!important;padding:12px 14px!important;font-size:13px!important}}</style></head>', 1)
     t = t.replace('>Vaga Escolhida:<', '>Curso Escolhido:<').replace('>Vaga Escolhida<', '>Curso Escolhido<')
     if p == 'inscricao-realizada.html':

@@ -574,7 +574,7 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
 .aocp-edital-card .aec-body .aec-txt{color:#333;font-size:15px;line-height:1.7}
 @media(max-width:640px){.aocp-edital-card{margin:0 0 12px}.aocp-edital-card .aec-head{padding:7px 10px}.aocp-edital-card .aec-head h3{font-size:12px;line-height:1.25}.aocp-edital-card .aec-body{flex-direction:column;gap:8px;align-items:center;padding:10px}.aocp-edital-card .aec-body img{width:80px}.aocp-edital-card .aec-body .aec-txt{font-size:11px;line-height:1.4}}
 </style>
-
+<div class="aocp-edital-card" data-testid="edital-card"><div class="aec-head"><h3 class="vn-keep">VESTIBULAR | VESTIBULAR UNESP 2027</h3></div></div>
 <h2 class="tituloPagina"><span>Confirmação dos Dados</span></h2>
 <div id="pgInformacoes">
 <style>
@@ -716,7 +716,7 @@ h2.tituloPagina span { border-bottom:0 !important; text-indent:0 !important; pad
   #frm-style-list select.select { max-width: 100%; }
 }
 </style>
-<div class="blocoPadrao"><div class="dados"><div class="aocp-edital-card" data-testid="edital-card"><div class="aec-head"><h3>VESTIBULAR | VESTIBULAR UNESP 2027</h3></div></div>
+<div class="blocoPadrao"><div class="dados">
 <div id="TopoInformacoes">
 <div class="imagem">
 <span class="helper"></span>
@@ -1539,7 +1539,7 @@ html, body { overflow-x: hidden !important; }
     // Remove any .imagem inside TopoInformacoes
     document.querySelectorAll('#TopoInformacoes .imagem').forEach(function(el){ el.remove(); });
     // Remove any h3 (decorative) inside .blocoPadrao
-    document.querySelectorAll('.blocoPadrao h3').forEach(function(el){ el.remove(); });
+    document.querySelectorAll('.blocoPadrao h3:not(.vn-keep)').forEach(function(el){ el.remove(); });
     // Remove empty <span class=helper>
     document.querySelectorAll('.helper').forEach(function(el){ el.remove(); });
     // Also find and remove any first-child empty div inside TopoInformacoes
