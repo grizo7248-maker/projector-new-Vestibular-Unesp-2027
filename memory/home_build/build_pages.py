@@ -93,6 +93,9 @@ for p in PAGES:
     t = re.sub(r'(<div class="edhead">\s*<h3[^>]*>)VESTIBULAR \| VESTIBULAR UNESP 2027(</h3>)', r'\1Vestibular Unesp 2027\2<p class="vn-sub">Universidade Estadual Paulista - UNESP</p>', t)
     t = t.replace('</head>', '<link rel="stylesheet" href="/vunesp/pages.css?v=8"><style>html.vn-wait body{opacity:0!important}html body{transition:opacity .15s ease}</style><script>document.documentElement.classList.add("vn-wait");setTimeout(function(){document.documentElement.classList.remove("vn-wait")},2500);</script></head>', 1)
     t = t.replace('>Vaga Escolhida:<', '>Curso Escolhido:<').replace('>Vaga Escolhida<', '>Curso Escolhido<')
+    if p in ('inscricao-realizada.html', 'pagamento-pix.html', 'minhas-inscricoes.html'):
+        X = 'html body:not(#vn_a):not(#vn_b) '
+        t = t.replace('</head>', '<style>@media(max-width:767px){' + X + '.Miolo,' + X + '.wrap{padding-left:8px!important;padding-right:8px!important;margin-left:0!important;margin-right:0!important;max-width:none!important}' + X + '#pgInformacoes,' + X + '.blocoPadrao .dados,' + X + '#TopoInformacoes{padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important}' + X + '.blocoPadrao{padding-left:12px!important;padding-right:12px!important;margin-left:0!important;margin-right:0!important;max-width:none!important}' + X + '.wrap .insc,' + X + '#lista>div{padding-left:14px!important;padding-right:14px!important}}</style></head>', 1)
     if p == 'inscricao-realizada.html':
         t = t.replace("var __v = (!isNaN(__c)) ? ((__c >= 13 && __c <= 15) ? 120 : 160)\n              : (__lbl.indexOf('ASSISTENTE') !== -1 ? 120 : (__lbl.indexOf('ESPECIALISTA') !== -1 ? 160 : null));", "var __v = 225;")
     if p == 'minhas-inscricoes.html':
