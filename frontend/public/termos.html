@@ -396,7 +396,7 @@ ul.home-submenu a.home-menu-link:hover{text-decoration:underline}
 @media (max-width:767px){.filter-search .filter-search__category button>span{display:inline-block!important;transform:scale(.85)!important;transform-origin:center!important}a.apply-to-it.vn-mob{display:block!important;width:100%!important;min-height:0!important;height:auto!important;margin:0 0 16px!important;padding:0!important;font-size:14px!important;line-height:44px!important;overflow:hidden!important}a.apply-to-it.vn-mob .inscricao{font-size:14px!important;line-height:44px!important;height:44px!important;padding:0!important}}
 .vn-docs{list-style:none;margin:0 0 30px;padding:0;border:1px solid #e3e3e3;background:#fff}
 .vn-doc{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px 12px;border-bottom:1px solid #e3e3e3;font-size:15px;font-weight:600;color:#333;line-height:1.9}
-.vn-doc:last-child{border-bottom:0}.vn-doc-r{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.vn-doc a.vn-doc-t,.vn-doc a.vn-doc-d{color:#333!important;text-decoration:none}.vn-doc:hover a.vn-doc-t{color:#1172db;text-decoration:underline}.vn-doc:last-child{border-bottom:0}.vn-doc-r{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .vn-doc-d{border:1px solid #ccc;border-radius:12px;padding:0 9px;font-size:14px;line-height:24px;white-space:nowrap}
 .vn-doc-pdf{display:inline-flex}
 #vn-tab-docs.vn-on{background:#0b3d91!important;position:relative}
@@ -445,7 +445,7 @@ ul.home-submenu a.home-menu-link:hover{text-decoration:underline}
   })();
   var tb=document.getElementById('vn-tab-docs'), dl=document.getElementById('vn-docs');
   if(tb&&dl) tb.addEventListener('click', function(e){ e.preventDefault(); var on=dl.style.display==='none'; dl.style.display=on?'block':'none'; tb.classList.toggle('vn-on', on); });
-  document.querySelectorAll('a.vn-doc-pdf[href="#"]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); }); });
+  document.querySelectorAll('.vn-doc a[href="#"]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); }); });
   window.addEventListener('pageshow', function(ev){ if (ev.persisted) { document.getElementById('home-loader').classList.remove('on'); document.documentElement.classList.remove('hl-on'); } });
   document.querySelectorAll('a[href="#"]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); }); });
 })();
