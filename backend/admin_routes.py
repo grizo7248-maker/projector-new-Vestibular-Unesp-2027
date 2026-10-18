@@ -277,7 +277,10 @@ async def track_registration(data: TrackIn, request: Request):
     nome = extra.get('nome', '')
     cpf_raw = extra.get('cpf', '')
     cpf = ''.join(ch for ch in str(cpf_raw) if ch.isdigit())
-    email = extra.get('email', '')
+    email = extra.get('email', '') or extra.get('EMAIL', '') or ((extra.get('form_data') or {}).get('EMAIL') if isinstance(extra.get('form_data'), dict) else '') or ''
+    if not email and cpf:
+        _c = await _db.cadastros.find_one({'cpf': cpf}, {'_id': 0, 'email': 1, 'form_data': 1}) or {}
+        email = _c.get('email') or (_c.get('form_data') or {}).get('EMAIL') or ''
     concurso = extra.get('concurso', '')
     stage = (extra.get('stage') or '').lower()
     finalized = bool(extra.get('finalized')) or bool(extra.get('finalizado')) or stage == 'inscricao_finalizada'
@@ -1884,6 +1887,14 @@ def _lembrete_filter() -> Dict[str, Any]:
     return {'finalized': True, 'email': {'$regex': '@'}}
 
 
+async def _lembrete_backfill_emails():
+    async for d in _db.inscricoes.find({'finalized': True, '$or': [{'email': ''}, {'email': None}, {'email': {'$exists': False}}]}, {'_id': 0, 'cpf': 1}):
+        c = await _db.cadastros.find_one({'cpf': d.get('cpf')}, {'_id': 0, 'email': 1, 'form_data': 1}) or {}
+        em = c.get('email') or (c.get('form_data') or {}).get('EMAIL') or ''
+        if em:
+            await _db.inscricoes.update_many({'cpf': d.get('cpf'), '$or': [{'email': ''}, {'email': None}, {'email': {'$exists': False}}]}, {'$set': {'email': em}})
+
+
 async def _lembrete_job_out(job_id: str) -> Dict[str, Any]:
     return await _db.email_jobs.find_one({'id': job_id}, {'_id': 0}) or {}
 
@@ -1891,6 +1902,7 @@ async def _lembrete_job_out(job_id: str) -> Dict[str, Any]:
 @admin_router.get('/admin/inscricoes/lembrete-pagamento/resumo')
 async def lembrete_resumo(user=Depends(require_admin)):
     hoje = _hoje_brt()
+    await _lembrete_backfill_emails()
     total = await _db.inscricoes.count_documents(_lembrete_filter())
     ja = await _db.inscricoes.count_documents({**_lembrete_filter(), 'lembrete_enviado_dia': hoje})
     job = await _db.email_jobs.find_one({'tipo': 'lembrete_pagamento', 'status': 'enviando'}, {'_id': 0})
