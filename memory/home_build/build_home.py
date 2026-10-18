@@ -27,6 +27,12 @@ s = s.replace('<meta name=viewport content="width=device-width, initial-scale=1,
               '<meta name=apple-mobile-web-app-capable content=yes>')
 
 s = s.replace('<div class=course-description>\n <p>\n A Unesp oferece', '<div class=course-description>\n <p data-testid=home-aviso-importante><strong>AVISO IMPORTANTE | VESTIBULAR UNESP 2027</strong><br>O período de inscrições para o Vestibular Unesp 2027 se encerra em 20 de outubro de 2026, às 23h59.<br>Os candidatos interessados devem realizar a inscrição dentro do prazo estabelecido, evitando imprevistos de última hora.<br><strong>Prazo final:</strong> 20/10/2026, às 23h59.</p>\n <p>\n A Unesp oferece', 1)
+import json as _j
+_docs = _j.load(open('/app/memory/home_build/docs.json', encoding='utf-8'))
+_pdf = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="7" y="18" font-size="6" font-family="Arial" fill="#333" stroke="none">PDF</text></svg>'
+_rows = ''.join('<li class=vn-doc data-testid="doc-item-%d"><span class=vn-doc-t>%s</span><span class=vn-doc-r><span class=vn-doc-d>%s</span><a class=vn-doc-pdf href="%s" %s data-testid="doc-pdf-%d" title="Abrir PDF">%s</a></span></li>' % (i, t, d, (u or '#'), ('target=_blank rel=noopener' if u else ''), i, _pdf) for i, (t, d, u) in enumerate(_docs))
+s = s.replace('<div class="col-xs-12 col-sm-12 col-md-12 course-tabs-content" id=course-tabs-content-VNSP2514>\n \n </div>', '<div class="col-xs-12 col-sm-12 col-md-12 course-tabs-content" id=course-tabs-content-VNSP2514><ul class=vn-docs id=vn-docs data-testid=docs-list style=display:none>' + _rows + '</ul></div>', 1)
+s = s.replace('<a  data-controller=projeto data-tabname=documento', '<a  data-controller=projeto data-tabname=documento id=vn-tab-docs data-testid=tab-editais', 1)
 extra = open('/app/memory/home_build/home_extra.html', encoding='utf-8').read()
 if '</body>' in s:
     s = s.replace('</body>', extra + '</body>', 1)
