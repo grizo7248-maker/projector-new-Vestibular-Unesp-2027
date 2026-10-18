@@ -37,7 +37,7 @@ REPL = [
     ('Secretaria da Educação do Estado do Ceará (SEDUC/CE)', 'Universidade Estadual Paulista (Unesp) - VNSP2514'),
     ('Cebraspe - Concursos e Seleções com Integridade', 'Fundação VUNESP'),
     ('sac@cebraspe.org.br', 'atendimento@vunesp.com.br'),
-    ('/seduc/seduc-theme.js?v=5', '/seduc/seduc-theme.js?v=15'),
+    ('/seduc/seduc-theme.js?v=5', '/seduc/seduc-theme.js?v=16'),
     ('/seduc/seduc-theme.css?v=7', '/seduc/seduc-theme.css?v=10'),
     ('#008d3c', '#1172db'), ('#006b2d', '#0b4f9c'), ('#00a84a', '#1172db'), ('#0e2a1a', '#0a2540'),
     ('<option value="1">FEMININO\n </option>', '<option value="1">FEMININO\n </option><option value="2">INTERSEXO</option><option value="3">OUTRO</option><option value="4">PREFIRO NÃO INFORMAR</option>'),

@@ -1,5 +1,5 @@
 (function(){
-var V='15';
+var V='16';
 var P=location.pathname;
 var MINHAS=/\/(inscricao-realizada|pagamento-pix|minhas-inscricoes)(\.html)?\/?$/.test(P);
 var BASE=':host{all:initial;display:block;font-family:"Open Sans",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857;color:#333;text-align:left}'+
@@ -31,7 +31,7 @@ function build(parts){
  var hh=parts.h;
  if(MINHAS){hh=hh.replace('<a href=# title="Área do Candidato">Área do Candidato</a>','<a class="vn-minhas vn-minhas-desk" href="/minhas-inscricoes.html" data-testid="header-minhas-inscricoes-desktop-btn">Minhas inscrições</a>').replace('</header>','<div class="vn-minhas-box"><button type="button" class="vn-burger" aria-label="Menu" aria-expanded="false" data-testid="header-hamburger-btn"><span></span><span></span><span></span></button><div class="vn-drop" data-testid="header-hamburger-menu"><a class="vn-minhas" href="/minhas-inscricoes.html" data-testid="header-minhas-inscricoes-btn">Minhas inscrições</a></div></div></header>');}
  var r=host('seduc-header-host',hh,true,'header{position:relative}'+(MINHAS?'.social,.socialmedia-item{display:none!important}':''));
- if(MINHAS){var bg=r.querySelector('.vn-burger'),dr=r.querySelector('.vn-drop');if(bg&&dr){bg.addEventListener('click',function(e){e.stopPropagation();var o=dr.classList.toggle('open');bg.setAttribute('aria-expanded',o?'true':'false');});document.addEventListener('click',function(){dr.classList.remove('open');bg.setAttribute('aria-expanded','false');});}}
+ if(MINHAS){var bg=r.querySelector('.vn-burger'),dr=r.querySelector('.vn-drop');if(bg&&dr){r.appendChild(dr);bg.addEventListener('click',function(e){e.stopPropagation();var o=dr.classList.toggle('open');bg.setAttribute('aria-expanded',o?'true':'false');});document.addEventListener('click',function(){dr.classList.remove('open');bg.setAttribute('aria-expanded','false');});}}
  document.querySelectorAll('#aocp-footer,.seduc-footer').forEach(function(el){el.remove();});
  host('vunesp-footer-host',parts.f,false,'#rodape{margin-top:40px}');
 }
