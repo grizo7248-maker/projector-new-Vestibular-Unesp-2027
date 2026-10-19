@@ -180,9 +180,17 @@ def _fmt_valor(valor) -> str:
     return "R$ " + f"{v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
+def _safe_base(*urls: str) -> str:
+    for u in urls:
+        u = (u or "").strip().rstrip("/")
+        if u.lower().startswith("https://") and _host_ok(urlparse(u.lower()).hostname or ""):
+            return u
+    return ""
+
+
 def _shell(inner: str, base: str = "") -> str:
-    base = (APP_PUBLIC_URL or base).rstrip("/")
-    logo_url = EMAIL_LOGO_URL or (f"{base}/seduc/email-logo-vunesp.png" if base else "")
+    base = _safe_base(APP_PUBLIC_URL, base)
+    logo_url = _safe_base(EMAIL_LOGO_URL) or (f"{base}/seduc/email-logo-vunesp.png" if base else "")
     logo = (
         f'<img src="{escape(logo_url)}" width="135" alt="Fundação VUNESP" '
         'style="display:block;margin:0 auto 16px;width:160px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none" />'
@@ -235,7 +243,7 @@ def _row(label: str, value: str) -> str:
 
 def build_inscricao_email_html(*, nome: str, cpf: str, protocolo: str, cargo: str,
                                concurso: str, valor, base_url: str = "", lembrete_prazo: str = "") -> str:
-    base = (APP_PUBLIC_URL or base_url).rstrip("/")
+    base = _safe_base(APP_PUBLIC_URL, base_url)
     pagamento_url = f"{base}/pagamento-pix.html" if base else ""
     cargo = re.sub(r"^\s*\d+\s*-\s*", "", re.sub(r"\s*-\s*R\$\s*[\d.,]+\s*$", "", cargo or "")).strip()
     rows = _row("Número da inscrição:", protocolo or "-")
