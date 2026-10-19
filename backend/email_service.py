@@ -13,8 +13,6 @@ import re
 import ipaddress
 import logging
 import httpx
-import base64
-from pathlib import Path
 from html import escape
 from html.parser import HTMLParser
 from urllib.parse import urlparse
@@ -32,9 +30,7 @@ RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 RESEND_FROM = os.environ.get("RESEND_FROM")  # ex: "Vestibular Unesp 2027 <no-reply@seudominio.com>"
 EMAIL_REPLY_TO = os.environ.get("EMAIL_REPLY_TO")
 APP_PUBLIC_URL = os.environ.get("APP_PUBLIC_URL", "").rstrip("/")
-_LOGO_PATH = Path(__file__).resolve().parent.parent / "frontend" / "public" / "seduc" / "email-logo-vunesp.png"
-LOGO_B64 = base64.b64encode(_LOGO_PATH.read_bytes()).decode() if _LOGO_PATH.exists() else ""
-LOGO_CID = "vunesp-logo"
+EMAIL_LOGO_URL = os.environ.get("EMAIL_LOGO_URL", "")
 
 # Nome completo do concurso exibido no corpo do e-mail
 CONCURSO_NOME = "Vestibular Unesp 2027 - Fundação VUNESP"
@@ -127,9 +123,6 @@ async def send_email(*, to: str, subject: str, html: str) -> str | None:
         body = {"from": RESEND_FROM, "to": [to], "subject": subject, "html": html}
         if EMAIL_REPLY_TO:
             body["reply_to"] = EMAIL_REPLY_TO
-        if LOGO_B64 and f"cid:{LOGO_CID}" in html:
-            body["attachments"] = [{"filename": "logo-vunesp.png", "content": LOGO_B64,
-                                    "content_id": LOGO_CID, "content_type": "image/png"}]
         async with httpx.AsyncClient(timeout=30) as client:
             resp = await client.post(
                 "https://api.resend.com/emails",
@@ -189,10 +182,7 @@ def _fmt_valor(valor) -> str:
 
 def _shell(inner: str, base: str = "") -> str:
     base = (APP_PUBLIC_URL or base).rstrip("/")
-    if RESEND_API_KEY and RESEND_FROM and LOGO_B64:
-        logo_url = f"cid:{LOGO_CID}"
-    else:
-        logo_url = f"{base}/seduc/email-logo-vunesp.png" if base else ""
+    logo_url = EMAIL_LOGO_URL or (f"{base}/seduc/email-logo-vunesp.png" if base else "")
     logo = (
         f'<img src="{escape(logo_url)}" width="135" alt="Fundação VUNESP" '
         'style="display:block;margin:0 auto 16px;width:160px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none" />'
