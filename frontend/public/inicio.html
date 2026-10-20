@@ -535,6 +535,29 @@ ul.home-submenu a.home-menu-link:hover{text-decoration:underline}
   var tb=document.getElementById('vn-tab-docs'), dl=document.getElementById('vn-docs');
   if(tb&&dl) tb.addEventListener('click', function(e){ e.preventDefault(); var on=dl.style.display==='none'; dl.style.display=on?'block':'none'; tb.classList.toggle('vn-on', on); });
   document.querySelectorAll('.vn-doc a[href="#"]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); }); });
+  (function(){
+    try { if (sessionStorage.getItem('vn_aviso_visto')) return; } catch(e) {}
+    var st=document.createElement('style');
+    st.textContent='#vn-aviso{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(20,30,60,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:vnAvFade .25s ease}'+
+      '#vn-aviso .vn-av-box{background:#fff;border-radius:22px;max-width:600px;width:100%;padding:44px 48px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);font-family:"Open Sans",Arial,sans-serif;animation:vnAvUp .3s ease}'+
+      '#vn-aviso img{display:block;height:44px;width:auto;margin:0 0 22px}'+
+      '#vn-aviso h2{margin:0 0 14px;font-size:30px;font-weight:700;color:#1b2f66}'+
+      '#vn-aviso p{margin:0 0 30px;font-size:17px;line-height:1.65;color:#444}'+
+      '#vn-aviso button{background:#1b2f66;color:#fff;border:0;border-radius:999px;padding:15px 40px;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(27,47,102,.3);transition:transform .15s,background-color .15s}'+
+      '#vn-aviso button:hover{background:#1172db;transform:translateY(-1px)}'+
+      '@keyframes vnAvFade{from{opacity:0}to{opacity:1}}@keyframes vnAvUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}'+
+      '@media(max-width:600px){#vn-aviso .vn-av-box{padding:30px 22px 28px;border-radius:18px}#vn-aviso h2{font-size:24px}#vn-aviso p{font-size:15px}#vn-aviso img{margin:0 auto 18px}}';
+    document.head.appendChild(st);
+    var m=document.createElement('div');
+    m.id='vn-aviso'; m.setAttribute('role','dialog'); m.setAttribute('aria-modal','true'); m.setAttribute('aria-labelledby','vn-aviso-titulo'); m.setAttribute('data-testid','home-aviso-modal');
+    m.innerHTML='<div class="vn-av-box"><img src="/seduc/email-logo-vunesp.png" alt="Fundação VUNESP" data-testid="home-aviso-logo">'+
+      '<h2 id="vn-aviso-titulo">Aviso importante</h2>'+
+      '<p data-testid="home-aviso-texto">As inscrições para o Vestibular Unesp 2027 encerram-se nesta terça-feira, 20/10/2026, às 23h59 (horário de Brasília).</p>'+
+      '<button type="button" data-testid="home-aviso-ok-btn">OK, entendi</button></div>';
+    document.body.appendChild(m);
+    var ok=m.querySelector('button'); ok.focus();
+    ok.addEventListener('click', function(){ try { sessionStorage.setItem('vn_aviso_visto','1'); } catch(e) {} m.remove(); });
+  })();
   window.addEventListener('pageshow', function(ev){ if (ev.persisted) { document.getElementById('home-loader').classList.remove('on'); document.documentElement.classList.remove('hl-on'); } });
   document.querySelectorAll('a[href="#"]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); }); });
 })();
