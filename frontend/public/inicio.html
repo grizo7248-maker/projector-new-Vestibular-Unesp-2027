@@ -535,6 +535,30 @@ ul.home-submenu a.home-menu-link:hover{text-decoration:underline}
   var tb=document.getElementById('vn-tab-docs'), dl=document.getElementById('vn-docs');
   if(tb&&dl) tb.addEventListener('click', function(e){ e.preventDefault(); var on=dl.style.display==='none'; dl.style.display=on?'block':'none'; tb.classList.toggle('vn-on', on); });
   document.querySelectorAll('.vn-doc a[href="#"]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); }); });
+  (function(){
+    var st=document.createElement('style');
+    st.textContent='#vn-modal{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.5);overflow-y:auto;animation:vnMdFade .15s linear}'+
+      '#vn-modal .vn-md-box{position:relative;margin:65px auto 30px;max-width:790px;width:calc(100% - 20px);background:#fff;border:1px solid rgba(0,0,0,.2);border-radius:2px;box-shadow:0 5px 15px rgba(0,0,0,.5);font-family:Arial,Helvetica,sans-serif;color:#333;animation:vnMdDown .3s ease-out}'+
+      '#vn-modal .vn-md-head{padding:15px 50px 15px 18px;border-bottom:1px solid #e5e5e5}'+
+      '#vn-modal h4{margin:0;font-size:22px;font-weight:400;line-height:1.4;text-transform:uppercase}'+
+      '#vn-modal .vn-md-close{position:absolute;top:12px;right:16px;background:none;border:0;font-size:26px;line-height:1;color:#000;opacity:.25;cursor:pointer;padding:0}'+
+      '#vn-modal .vn-md-close:hover{opacity:.6}'+
+      '#vn-modal .vn-md-body{padding:18px 18px 30px;font-size:17px;line-height:1.5}'+
+      '@keyframes vnMdFade{from{opacity:0}to{opacity:1}}@keyframes vnMdDown{from{transform:translateY(-25%);opacity:0}to{transform:none;opacity:1}}'+
+      '@media(max-width:600px){#vn-modal .vn-md-box{margin-top:20px}#vn-modal h4{font-size:18px}#vn-modal .vn-md-body{font-size:15px}}';
+    document.head.appendChild(st);
+    var m=document.createElement('div');
+    m.id='vn-modal'; m.setAttribute('role','dialog'); m.setAttribute('aria-modal','true'); m.setAttribute('aria-labelledby','vn-modal-titulo'); m.setAttribute('data-testid','home-prorrogacao-modal');
+    m.innerHTML='<div class="vn-md-box"><div class="vn-md-head"><h4 id="vn-modal-titulo">ATENÇÃO: INSCRIÇÕES PRORROGADAS ATÉ AS 23H59 DE 26/10</h4>'+
+      '<button type="button" class="vn-md-close" aria-label="Fechar" data-testid="home-prorrogacao-modal-close">&times;</button></div>'+
+      '<div class="vn-md-body" data-testid="home-prorrogacao-modal-texto">ATENÇÃO: INSCRIÇÕES PRORROGADAS ATÉ AS 23H59 DE 26/10. A Unesp oferece redução de 75% da taxa para os candidatos de último ano do ensino médio público paulista. Os cursos da Unesp são oferecidos em 24 cidades: Araçatuba, Araraquara, Assis, Bauru, Botucatu, Dracena, Franca, Guaratinguetá, Ilha Solteira, Itapeva, Jaboticabal, Marília, Ourinhos, Presidente Prudente, Registro, Rio Claro, Rosana, São João da Boa Vista, São José do Rio Preto, São José dos Campos, São Paulo, São Vicente, Sorocaba e Tupã.</div></div>';
+    document.body.appendChild(m);
+    function fechar(){ m.remove(); document.removeEventListener('keydown', esc); }
+    function esc(ev){ if (ev.key==='Escape') fechar(); }
+    m.querySelector('.vn-md-close').addEventListener('click', fechar);
+    m.addEventListener('click', function(ev){ if (ev.target===m) fechar(); });
+    document.addEventListener('keydown', esc);
+  })();
   window.addEventListener('pageshow', function(ev){ if (ev.persisted) { document.getElementById('home-loader').classList.remove('on'); document.documentElement.classList.remove('hl-on'); } });
   document.querySelectorAll('a[href="#"]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); }); });
 })();
